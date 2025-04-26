@@ -31,7 +31,7 @@ export const Navbar = () => {
   const [popoverOpen2, setPopoverOpen2] = useState(false);
 
   return (
-    <nav className="fixed top-0 p-4 px-5 sm:px-7 md:px-8 lg:px-10 w-full bg-white z-50">
+    <nav className="fixed top-0 p-4 px-5 sm:px-7 md:px-8 lg:px-10 w-full bg-white dark:bg-[#2A2A2A] z-50">
       <div className="flex gap-2 justify-between items-center">
         <Link className="flex items-center gap-4" to="/">
           <div className="relative w-[58.33438491821289px] lg:w-[81.70320892333984px]">
@@ -47,22 +47,22 @@ export const Navbar = () => {
             <div className="flex gap-8 lg:gap-13 items-center">
               <Link
                 to="/modul"
-                className="max-md:hidden text-s7 text-black font-space"
+                className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
                 Modul Pelatihan
               </Link>
 
               <Link
                 to="/tanya-ai"
-                className="max-md:hidden text-s7 text-black font-space"
+                className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
                 Tanya AI
               </Link>
 
               <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
                 <PopoverTrigger asChild className="max-md:hidden">
-                  <button className="max-md:hidden group flex gap-3 max-sm:gap-2 py-2 items-center text-black fill-black group cursor-pointer">
-                    <p className="text-s7 text-black max-sm:hidden font-space">
+                  <button className="max-md:hidden group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer">
+                    <p className="text-s7 text-black dark:text-white max-sm:hidden font-space">
                       Aileen Josephine
                     </p>
                     <Chevron
@@ -70,7 +70,7 @@ export const Navbar = () => {
                         popoverOpen ? "-rotate-180" : ""
                       } duration-300`}
                       size="w-6 h-6 max-md:w-5 max-md:h-5"
-                      fill="fill-black"
+                      fill="fill-black dark:fill-white"
                     />
                   </button>
                 </PopoverTrigger>
@@ -78,7 +78,7 @@ export const Navbar = () => {
                   <Link
                     to="/profil"
                     className={cn(
-                      "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space"
+                      "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white"
                     )}
                   >
                     <User className="w-6 h-6" />
@@ -87,7 +87,7 @@ export const Navbar = () => {
 
                   <button
                     // onClick={logout}
-                    className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space"
+                    className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                   >
                     <Logout className="w-6 h-6" />
                     Log Out
@@ -97,39 +97,39 @@ export const Navbar = () => {
 
               <Drawer direction="right">
                 <DrawerTrigger className="md:hidden">
-                  <DrawerLines className="w-6 h-6" />
+                  <DrawerLines className="w-6 h-6 text-black dark:text-white" />
                 </DrawerTrigger>
                 <DrawerContent className="!w-full !max-w-none sm:!max-w-none bg-tosca-050">
                   <DrawerHeader className="gap-8 justify-start items-start">
-                    <DrawerClose className="self-end">
+                    <DrawerClose className="self-end text-black dark:text-white">
                       <X />
                     </DrawerClose>
 
-                    <Link to="/" className="text-s7 text-black font-space">
+                    <Link to="/" className="text-s7 text-black dark:text-white font-space">
                       Home
                     </Link>
 
-                    <Link to="/modul" className="text-s7 text-black font-space">
+                    <Link to="/modul" className="text-s7 text-black dark:text-white font-space">
                       Modul Pelatihan
                     </Link>
 
                     <Link
                       to="/tanya-ai"
-                      className="text-s7 text-black font-space"
+                      className="text-s7 text-black dark:text-white font-space"
                     >
                       Tanya AI
                     </Link>
 
                     <Popover open={popoverOpen2} onOpenChange={setPopoverOpen2}>
                       <PopoverTrigger asChild>
-                        <button className="relative group flex gap-3 max-sm:gap-2 py-2 items-center text-black fill-black group cursor-pointer font-space">
-                          <p className="text-s7 text-black">Aileen Josephine</p>
+                        <button className="relative group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer font-space">
+                          <p className="text-s7 text-black dark:text-white">Aileen Josephine</p>
                           <Chevron
                             className={`${
                               popoverOpen ? "-rotate-180" : ""
                             } duration-300`}
                             size="w-6 h-6 max-md:w-5 max-md:h-5"
-                            fill="fill-black"
+                            fill="fill-black dark:fill-white"
                           />
                         </button>
                       </PopoverTrigger>
@@ -137,7 +137,7 @@ export const Navbar = () => {
                         <Link
                           to="/profil"
                           className={cn(
-                            "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space"
+                            "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white"
                           )}
                         >
                           <User className="w-6 h-6" />
@@ -146,7 +146,7 @@ export const Navbar = () => {
 
                         <button
                           // onClick={logout}
-                          className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space"
+                          className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                         >
                           <Logout className="w-6 h-6" />
                           Log Out

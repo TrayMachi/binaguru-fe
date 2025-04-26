@@ -14,9 +14,9 @@ export default function Index() {
     ok: boolean;
   } = useLoaderData();
   return (
-    <main className="text-black font-space">
+    <main className="text-black dark:text-white font-space">
       <Navbar />
-      <main className="pt-15 font-ubuntu max-w-[1920px] bg-frame mx-auto min-h-screen overflow-x-hidden flex flex-col">
+      <main className="pt-15 font-ubuntu max-w-[1920px] bg-frame dark:bg-[#1A1A1A] mx-auto min-h-screen overflow-x-hidden flex flex-col">
         <Outlet context={data} />
         <Toaster />
         <Footer />
