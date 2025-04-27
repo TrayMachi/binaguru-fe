@@ -13,7 +13,11 @@ import "./app.css";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "BinaGuru" },
-    { name: "description", content: "Welcome to React Router!" },
+    {
+      name: "description",
+      content:
+        "BinaGuru hadir untuk mempercepat transformasi guru dengan teknologi, pelatihan berbasis AI, dan komunitas kolaboratif.",
+    },
   ];
 }
 
@@ -36,6 +40,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="/favicon/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/favicon/apple-touch-icon.png"
+        />
+        <meta name="apple-mobile-web-app-title" content="BinaGuru" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         <Meta />
         <Links />
       </head>
