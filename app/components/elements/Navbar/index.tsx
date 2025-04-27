@@ -18,6 +18,7 @@ import {
 import { DrawerLines } from "~/components/icons/DrawerLines";
 import { User, X } from "lucide-react";
 import { cn } from "~/lib/utils";
+import { ThemeToggler } from "~/components/ThemeToggler";
 
 export const Navbar = () => {
   const data: {
@@ -42,7 +43,8 @@ export const Navbar = () => {
             />
           </div>
         </Link>
-        <div>
+        <div className="flex gap-8 lg:gap-13 items-center">
+          <ThemeToggler />
           {data?.isLoggedIn ? (
             <div className="flex gap-8 lg:gap-13 items-center">
               <Link
@@ -105,11 +107,17 @@ export const Navbar = () => {
                       <X />
                     </DrawerClose>
 
-                    <Link to="/" className="text-s7 text-black dark:text-white font-space">
+                    <Link
+                      to="/"
+                      className="text-s7 text-black dark:text-white font-space"
+                    >
                       Home
                     </Link>
 
-                    <Link to="/modul" className="text-s7 text-black dark:text-white font-space">
+                    <Link
+                      to="/modul"
+                      className="text-s7 text-black dark:text-white font-space"
+                    >
                       Modul Pelatihan
                     </Link>
 
@@ -123,7 +131,9 @@ export const Navbar = () => {
                     <Popover open={popoverOpen2} onOpenChange={setPopoverOpen2}>
                       <PopoverTrigger asChild>
                         <button className="relative group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer font-space">
-                          <p className="text-s7 text-black dark:text-white">Aileen Josephine</p>
+                          <p className="text-s7 text-black dark:text-white">
+                            Aileen Josephine
+                          </p>
                           <Chevron
                             className={`${
                               popoverOpen ? "-rotate-180" : ""
