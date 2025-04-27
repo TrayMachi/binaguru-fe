@@ -3,7 +3,7 @@ import { Button } from "~/components/ui/button";
 
 export default function LandingModule() {
   return (
-    <div className="md:h-screen lg:h-[90vh] grow w-screen flex flex-col gap-4 justify-start items-start text-black md:px-10 lg:px-20 md:py-32">
+    <div className="relative overflow-clip md:h-screen grow w-screen flex flex-col gap-4 justify-start items-start text-black md:px-10 lg:px-20 md:py-32">
       <img
         src="/herolandingup.png"
         alt="Landing Hero"
