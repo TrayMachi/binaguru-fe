@@ -16,7 +16,7 @@ import {
   DrawerTrigger,
 } from "~/components/ui/drawer";
 import { DrawerLines } from "~/components/icons/DrawerLines";
-import { User, X } from "lucide-react";
+import { AlignJustify, LogOut, User, X } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { ThemeToggler } from "~/components/ThemeToggler";
 
@@ -80,7 +80,7 @@ export const Navbar = () => {
                   <Link
                     to="/profil"
                     className={cn(
-                      "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white"
+                      "flex flex-row gap-2 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white  text-s7"
                     )}
                   >
                     <User className="w-6 h-6" />
@@ -91,7 +91,7 @@ export const Navbar = () => {
                     // onClick={logout}
                     className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                   >
-                    <Logout className="w-6 h-6" />
+                    <LogOut className="w-6 h-6" />
                     Log Out
                   </button>
                 </PopoverContent>
@@ -99,9 +99,9 @@ export const Navbar = () => {
 
               <Drawer direction="right">
                 <DrawerTrigger className="md:hidden">
-                  <DrawerLines className="w-6 h-6 text-black dark:text-white" />
+                  <AlignJustify className="w-6 h-6 text-black dark:text-frame" />
                 </DrawerTrigger>
-                <DrawerContent className="!w-full !max-w-none sm:!max-w-none bg-tosca-050">
+                <DrawerContent className="!w-full !max-w-none sm:!max-w-none bg-tosca-050 dark:bg-black">
                   <DrawerHeader className="gap-8 justify-start items-start">
                     <DrawerClose className="self-end text-black dark:text-white">
                       <X />
@@ -147,7 +147,7 @@ export const Navbar = () => {
                         <Link
                           to="/profil"
                           className={cn(
-                            "flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white"
+                            "flex flex-row gap-2 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white text-s7"
                           )}
                         >
                           <User className="w-6 h-6" />
@@ -158,7 +158,7 @@ export const Navbar = () => {
                           // onClick={logout}
                           className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                         >
-                          <Logout className="w-6 h-6" />
+                          <LogOut className="w-6 h-6 text-black dark:text-frame" />
                           Log Out
                         </button>
                       </PopoverContent>
