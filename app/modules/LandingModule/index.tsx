@@ -1,16 +1,17 @@
 import { Link } from "react-router";
 import { Button } from "~/components/ui/button";
+import { getAsset } from "~/lib/getAsset";
 
 export default function LandingModule() {
   return (
     <div className="relative overflow-clip md:h-screen grow w-screen flex flex-col gap-4 justify-start items-start text-black md:px-10 lg:px-20 md:py-32">
       <img
-        src="/herolandingup.png"
+        src={getAsset("/herolandingup.webp")}
         alt="Landing Hero"
         className="md:hidden w-full z-[1] -mt-7 sm:-mt-15 dark:hidden"
       />
       <img
-        src="/herolandingupdark.png"
+        src={getAsset("/herolandingupdark.webp")}
         alt="Landing Hero"
         className="hidden w-full z-[1] -mt-7 sm:-mt-15 dark:max-md:flex"
       />
@@ -39,25 +40,25 @@ export default function LandingModule() {
       </div>
 
       <img
-        src="/herolandingdown.png"
+        src={getAsset("/herolandingdown.webp")}
         alt="Landing Hero"
         className="md:hidden w-full z-[1] -mb-8 sm:-mb-20 dark:hidden"
       />
 
       <img
-        src="/herolandingdowndark.png"
+        src={getAsset("/herolandingdowndark.webp")}
         alt="Landing Hero"
         className="w-full z-[1] -mb-8 sm:-mb-20 hidden dark:max-md:flex"
       />
 
       <img
-        src="/herolanding.png"
+        src={getAsset("/herolanding.webp")}
         alt="Landing Hero"
         className="hidden md:flex w-[55%] aspect-[768/692.14] absolute right-0 max-lg:translate-y-12 z-[1] dark:hidden"
       />
 
       <img
-        src="/herolandingdark.png"
+        src={getAsset("/herolandingdark.webp")}
         alt="Landing Hero"
         className="hidden w-[55%] aspect-[768/692.14] absolute right-0 max-lg:translate-y-12 z-[1] dark:max-md:hidden dark:md:flex"
       />
