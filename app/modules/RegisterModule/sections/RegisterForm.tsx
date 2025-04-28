@@ -145,7 +145,7 @@ export const RegisterForm = () => {
             Kendala dalam Mengajar (bisa pilih lebih dari satu)
             <span className="text-red-600"> *</span>
           </Label>
-          <div className="md:p-5 p-4 mt-2 bg-[#2A2A2A] rounded-lg border flex flex-col gap-5">
+          <div className="md:p-5 p-4 mt-2 dark:bg-[#2A2A2A] bg-white rounded-lg border flex flex-col gap-5">
             {cons.map((cons, index) => (
               <div className="flex items-center gap-2" key={index}>
                 <Checkbox key={index} id={cons} name={cons} value={cons} />
@@ -170,7 +170,7 @@ export const RegisterForm = () => {
             Minat untuk Pelatihan (bisa pilih lebih dari satu)
             <span className="text-red-600"> *</span>
           </Label>
-          <div className="md:p-5 p-4 mt-2 bg-[#2A2A2A] rounded-lg border flex flex-col gap-5">
+          <div className="md:p-5 p-4 mt-2 dark:bg-[#2A2A2A] bg-white rounded-lg border flex flex-col gap-5">
             {pros.map((pros, index) => (
               <div className="flex items-center gap-2" key={index}>
                 <Checkbox key={index} id={pros} name={pros} value={pros} />
