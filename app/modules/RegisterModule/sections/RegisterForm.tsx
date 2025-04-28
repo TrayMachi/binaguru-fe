@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, useActionData } from "react-router";
+import { Form, useActionData, useNavigation } from "react-router";
 import { Input } from "~/components/ui/input";
 import type { RegisterAction } from "../action";
 import { LevelCombobox } from "~/components/elements/LevelCombobox";
@@ -13,25 +13,27 @@ import { toast } from "~/hooks/use-toast";
 export const RegisterForm = () => {
   const actionData = useActionData<typeof RegisterAction>();
   const [level, setLevel] = useState("");
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   useEffect(() => {
     if (actionData?.success) {
       toast({
-        title: 'Register Berhasil',
-        variant: 'success',
+        title: "Register Berhasil",
+        variant: "success",
       });
     } else if (
       actionData &&
       !actionData.success &&
-      typeof actionData?.message === 'string'
+      typeof actionData?.message === "string"
     ) {
       toast({
         title: actionData?.message,
-        variant: 'error',
+        variant: "error",
       });
     }
   }, [actionData]);
-  
+
   return (
     <section className="py-7 px-5 md:p-20 md:space-y-7 space-y-6 w-full">
       <h1 className="text-h4 font-suez">Registrasi Guru</h1>
@@ -43,6 +45,7 @@ export const RegisterForm = () => {
           required
           id="username"
           name="username"
+          disabled={isSubmitting}
           autoComplete="username"
           label="Nama Lengkap"
           placeholder="Ketik nama lengkap Anda di sini..."
@@ -59,6 +62,7 @@ export const RegisterForm = () => {
           id="email"
           type="email"
           name="email"
+          disabled={isSubmitting}
           autoComplete="email"
           label="Email"
           placeholder="Ketik email Anda di sini..."
@@ -74,6 +78,7 @@ export const RegisterForm = () => {
           id="password"
           name="password"
           type="password"
+          disabled={isSubmitting}
           autoComplete="password"
           label="Password"
           placeholder="Minimal 8 karakter (huruf, angka, karakter spesial)"
@@ -88,6 +93,7 @@ export const RegisterForm = () => {
           required
           id="location"
           name="location"
+          disabled={isSubmitting}
           autoComplete="location"
           label="Lokasi"
           placeholder="Ketik lokasi Anda mengajar di sini..."
@@ -103,6 +109,7 @@ export const RegisterForm = () => {
           id="birthDate"
           type="date"
           name="birthDate"
+          disabled={isSubmitting}
           autoComplete="username"
           label="Tanggal Lahir"
           placeholder="Ketik tanggal lahir Anda di sini..."
@@ -117,6 +124,7 @@ export const RegisterForm = () => {
           required
           id="yoe"
           name="yoe"
+          disabled={isSubmitting}
           autoComplete="yoe"
           type="number"
           min="0"
@@ -148,7 +156,13 @@ export const RegisterForm = () => {
           <div className="md:p-5 p-4 mt-2 dark:bg-[#2A2A2A] bg-white rounded-lg border flex flex-col gap-5">
             {cons.map((cons, index) => (
               <div className="flex items-center gap-2" key={index}>
-                <Checkbox key={index} id={cons} name={cons} value={cons} />
+                <Checkbox
+                  disabled={isSubmitting}
+                  key={index}
+                  id={cons}
+                  name={cons}
+                  value={cons}
+                />
                 <label htmlFor={cons} className="text-b8">
                   {cons}
                 </label>
@@ -173,7 +187,13 @@ export const RegisterForm = () => {
           <div className="md:p-5 p-4 mt-2 dark:bg-[#2A2A2A] bg-white rounded-lg border flex flex-col gap-5">
             {pros.map((pros, index) => (
               <div className="flex items-center gap-2" key={index}>
-                <Checkbox key={index} id={pros} name={pros} value={pros} />
+                <Checkbox
+                  disabled={isSubmitting}
+                  key={index}
+                  id={pros}
+                  name={pros}
+                  value={pros}
+                />
                 <label htmlFor={pros} className="text-b8">
                   {pros}
                 </label>
@@ -190,7 +210,11 @@ export const RegisterForm = () => {
               )}
           </div>
         </div>
-        <Button type="submit" className="max-w-23 col-span-2 justify-self-end">
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          className="max-w-23 col-span-2 justify-self-end"
+        >
           Masuk
         </Button>
       </Form>
