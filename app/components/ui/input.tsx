@@ -13,6 +13,7 @@ export interface InputProps
   desc?: string;
   required?: boolean;
   rightIcon?: React.ReactNode;
+  layout?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -27,6 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       desc,
       required,
       rightIcon,
+      layout,
       ...props
     },
     ref
@@ -46,17 +48,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           rightIcon as React.ReactElement,
           {
             className:
-              "absolute right-3 top-1/2 transform -translate-y-1/2 text-black w-4",
+              "absolute right-3 top-1/2 transform -translate-y-1/2 dark:text-white text-black w-4",
           } as React.SVGProps<SVGSVGElement>
         )
       : null;
 
     return (
-      <div className="space-y-2">
+      <div className={cn(layout)}>
         <Label>
           {label} {required && <span className="text-red-600">*</span>}
         </Label>
-        <div className="relative">
+        <div className="relative my-2">
           {icon && clonedIcon}
           {prefix && (
             <div className="absolute left-3 md:mt-0 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
@@ -67,7 +69,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             type={type}
             className={cn(
-              "disabled:opacity-40 px-4 py-3 flex h-12 w-full rounded-[8px] border-[1px] font-space bg-white text-b8 file:border-0 file:bg-transparent file:text-b8 file:font-medium placeholder:text-gray-500 focus-visible:outline-none disabled:cursor-not-allowed  hover:placeholder:text-black/100 transition-all duration-500",
+              "disabled:opacity-40 px-4 py-3 flex h-12 w-full rounded-[8px] border-[1px] font-space bg-white dark:bg-[#2A2A2A] text-b8 file:border-0 file:bg-transparent file:text-b8 file:font-medium placeholder:text-gray-500 focus-visible:outline-none disabled:cursor-not-allowed  hover:placeholder:text-black/100 transition-all duration-500",
               icon ? "pl-10" : rightIcon ? "pr-10" : prefix ? "pl-12" : "pl-3",
               error
                 ? "border-error"
