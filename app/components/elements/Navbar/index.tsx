@@ -7,7 +7,6 @@ import {
 } from "~/components/ui/popover";
 import { Button } from "../../ui/button";
 import { Chevron } from "~/components/icons/Chevron";
-import { Logout } from "~/components/icons/Logout";
 import {
   Drawer,
   DrawerClose,
@@ -15,18 +14,15 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "~/components/ui/drawer";
-import { DrawerLines } from "~/components/icons/DrawerLines";
 import { AlignJustify, LogOut, User, X } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { ThemeToggler } from "~/components/ThemeToggler";
+import type { loader } from "~/routes/_page";
+import { useLogout } from '~/hooks/useLogout';
 
 export const Navbar = () => {
-  const data: {
-    isLoggedIn: boolean;
-    token: string;
-    ok: boolean;
-    registered: boolean;
-  } = useLoaderData();
+  const data = useLoaderData<typeof loader>();
+  const logout = useLogout();
 
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverOpen2, setPopoverOpen2] = useState(false);
@@ -132,7 +128,7 @@ export const Navbar = () => {
                       <PopoverTrigger asChild>
                         <button className="relative group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer font-space">
                           <p className="text-s7 text-black dark:text-white">
-                            Aileen Josephine
+                            {data.user?.name}
                           </p>
                           <Chevron
                             className={`${
@@ -155,7 +151,7 @@ export const Navbar = () => {
                         </Link>
 
                         <button
-                          // onClick={logout}
+                          onClick={logout}
                           className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                         >
                           <LogOut className="w-6 h-6 text-black dark:text-frame" />
