@@ -132,7 +132,7 @@ export const Navbar = () => {
                           </p>
                           <Chevron
                             className={`${
-                              popoverOpen ? "-rotate-180" : ""
+                              popoverOpen2 ? "-rotate-180" : ""
                             } duration-300`}
                             size="w-6 h-6 max-md:w-5 max-md:h-5"
                             fill="fill-black dark:fill-white"
