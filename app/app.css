@@ -310,3 +310,41 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-neutral-500);
 }
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px; /* For horizontal scrollbars */
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-tosca-300);
+  border-radius: 10px;
+}
+
+.dark .thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-tosca-600);
+}
+
+/* Firefox and Edge thin scrollbar */
+.thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-tosca-300) transparent; /* thumb and track color */
+}
+
+.dark .thin-scrollbar {
+  scrollbar-color: var(--color-tosca-600) transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

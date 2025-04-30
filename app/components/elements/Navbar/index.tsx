@@ -115,10 +115,10 @@ export const Navbar = () => {
                     </Link>
 
                     <Link
-                      to="/modul"
+                      to="/search"
                       className="text-s7 text-black dark:text-white font-space"
                     >
-                      Modul Pelatihan
+                      Course Pelatihan
                     </Link>
 
                     <Link
