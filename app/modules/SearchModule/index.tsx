@@ -1,49 +1,21 @@
-import { Bookmark, BookMarked, Filter, Search } from "lucide-react";
+import { BookMarked, Filter, Search, X } from "lucide-react";
 import { CourseCard } from "~/components/elements/CourseCard";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Input } from "~/components/ui/input";
 import { getAsset } from "~/lib/getAsset";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTrigger,
+} from "~/components/ui/drawer";
+import { useLoaderData } from "react-router";
+import type { CourseResponse } from "./loader";
 
 export default function SearchModule() {
-  const dummyCourseData = [
-    {
-      id: "1",
-      title: "Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Volutpat",
-      description:
-        "Pelajari cara mengelola kelas digital dengan efektif untuk pembelajaran jarak jauh",
-      level: "Pemula",
-      pros: "Pengelolaan Kelas",
-      progress: 50,
-    },
-    {
-      id: "2",
-      title: "Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Volutpat",
-      description:
-        "Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas",
-      level: "Menengah",
-      pros: "Kurikulum dan Rencana Pembelajaran",
-      progress: 75,
-    },
-    {
-      id: "2",
-      title: "Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Volutpat",
-      description:
-        "Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas",
-      level: "Menengah",
-      pros: "Kurikulum dan Rencana Pembelajaran",
-      progress: 75,
-    },
-    {
-      id: "2",
-      title: "Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Volutpat",
-      description:
-        "Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas Teknik pengajaran modern untuk meningkatkan keterlibatan siswa dalam kelas",
-      level: "Menengah",
-      pros: "Kurikulum dan Rencana Pembelajaran",
-      progress: 75,
-    },
-  ];
+  const data = useLoaderData() as CourseResponse;
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col justify-start items-start text-black pb-10 max-md:-mt-10">
@@ -80,13 +52,289 @@ export default function SearchModule() {
                 />
               </div>
               <div className="col-span-4">
-                <Button
-                  variant={"secondary"}
-                  className="w-full lg:hidden col-span-4"
-                >
-                  Filter
-                  <Filter />
-                </Button>
+                <Drawer direction="bottom">
+                  <DrawerTrigger className="lg:hidden w-full ">
+                    <Button
+                      variant={"secondary"}
+                      className="w-full lg:hidden col-span-4"
+                    >
+                      Filter
+                      <Filter />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className="!w-full !max-w-none sm:!max-w-none bg-white dark:bg-[#2A2A2A]">
+                    <DrawerHeader className="gap-3 justify-start items-start thin-scrollbar overflow-x-auto scrollbar-hide">
+                      <div className="flex flex-row items-center justify-between w-full">
+                        <div className="font-space text-s6">Filters</div>
+                        <DrawerClose className="text-black dark:text-white">
+                          <X />
+                        </DrawerClose>
+                      </div>
+                      <div className="space-y-7">
+                        <div className="space-y-3">
+                          <div className="font-space text-s8 text-[#A7A7A7]">
+                            Jenjang Pendidikan
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sd" />
+                              <label
+                                htmlFor="sd"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                SD
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="smp" />
+                              <label
+                                htmlFor="smp"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                SMP
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sma" />
+                              <label
+                                htmlFor="sma"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                SMA
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Kuliah
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-space text-s8 text-[#A7A7A7]">
+                            Tipe Pelatihan
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sd" />
+                              <label
+                                htmlFor="sd"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Pengelolaan Kelas
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="smp" />
+                              <label
+                                htmlFor="smp"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Pembelajaran Daring
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sma" />
+                              <label
+                                htmlFor="sma"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Teknologi dalam Pendidikan
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Inovasi Pembelajaran
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Kurikulum dan Rencana Pembelajaran
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Teknik Evaluasi Pembelajaran
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-space text-s8 text-[#A7A7A7]">
+                            Kendala
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sd" />
+                              <label
+                                htmlFor="sd"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Akses ke Materi
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="smp" />
+                              <label
+                                htmlFor="smp"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Teknologi & Infrastruktur
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sma" />
+                              <label
+                                htmlFor="sma"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Pembelajaran Jarak Jauh
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Pengelolaan Kelas
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Metode Pengajaran
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Kendala Mental & Motivasi
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-space text-s8 text-[#A7A7A7]">
+                            Bahasa
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sd" />
+                              <label
+                                htmlFor="sd"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Indonesia
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="smp" />
+                              <label
+                                htmlFor="smp"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Inggris
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sma" />
+                              <label
+                                htmlFor="sma"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Daerah
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="font-space text-s8 text-[#A7A7A7]">
+                            Mata Pelajaran
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sd" />
+                              <label
+                                htmlFor="sd"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Matematika
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="smp" />
+                              <label
+                                htmlFor="smp"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                IPA
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="sma" />
+                              <label
+                                htmlFor="sma"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Biologi
+                              </label>
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="pt" />
+                              <label
+                                htmlFor="pt"
+                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                Fisika
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </DrawerHeader>
+                  </DrawerContent>
+                </Drawer>
               </div>
             </div>
             <Button variant={"secondary"} className="w-full lg:w-fit">
@@ -380,14 +628,14 @@ export default function SearchModule() {
               Courseku
             </div>
             <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {dummyCourseData.map((course) => (
+              {data.courseku.map((course) => (
                 <CourseCard
                   key={course.id}
                   id={course.id}
                   title={course.title}
                   description={course.description}
                   level={course.level}
-                  pros={course.pros}
+                  pros={course.courseType}
                   progress={course.progress}
                 />
               ))}
@@ -398,15 +646,14 @@ export default function SearchModule() {
               Rekomendasi
             </div>
             <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {dummyCourseData.map((course) => (
+              {data.rekomendasi.map((course) => (
                 <CourseCard
                   key={course.id}
                   id={course.id}
                   title={course.title}
                   description={course.description}
                   level={course.level}
-                  pros={course.pros}
-                  progress={course.progress}
+                  pros={course.courseType}
                 />
               ))}
             </div>
@@ -416,16 +663,14 @@ export default function SearchModule() {
               Semua Course
             </div>
             <div className="max-md:gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {dummyCourseData.map((course) => (
+              {data.allcourse.map((course) => (
                 <CourseCard
                   key={course.id}
                   id={course.id}
                   title={course.title}
                   description={course.description}
                   level={course.level}
-                  pros={course.pros}
-                  progress={course.progress}
-                  className="!w-full"
+                  pros={course.courseType}
                 />
               ))}
             </div>

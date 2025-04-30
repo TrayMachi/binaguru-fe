@@ -6,6 +6,6 @@ export default function CoursePage() {
   return <CourseModule />;
 }
 
-// export async function loader(args: LoaderFunctionArgs) {
-//   return CourseLoader(args);
-// }
+export async function loader(args: LoaderFunctionArgs) {
+  return CourseLoader(args);
+}

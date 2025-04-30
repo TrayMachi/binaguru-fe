@@ -1,5 +1,51 @@
 import type { LoaderFunctionArgs } from "react-router";
+import { fetcher } from "~/lib/fetch.server";
+import type { ResponseInterface } from "~/lib/utils";
 
-export async function CourseLoader({ request }: LoaderFunctionArgs) {
-  return null;
+export interface Course {
+  id: string;
+  title: string;
+  description: string;
+  level: string;
+  language: string;
+  courseType: string;
+  courseSubject: string;
+  progress: number;
+  modules?: {
+    id: string;
+    title: string;
+    hasAssignment: boolean;
+  }[];
+}
+
+export interface Modules {
+  id: string;
+  title: string;
+  hasAssignment: boolean;
+}
+
+export interface CourseResponse {
+  code: number;
+  success: boolean;
+  message: string;
+  course: Course;
+  modules: Modules[];
+}
+
+export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
+  const { id } = params;
+
+  const response = await fetcher<CourseResponse>(`courses/${id}`, request, {
+    method: "GET",
+  });
+
+  if (!response.success) {
+    return {
+      message: response.message || "Failed to load course",
+      success: false,
+      courseku: { modules: [] },
+    };
+  }
+
+  return response.data;
 }
