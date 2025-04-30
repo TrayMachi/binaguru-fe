@@ -1,4 +1,4 @@
-import { Outlet, type LoaderFunctionArgs } from "react-router";
+import { Outlet, redirect, type LoaderFunctionArgs } from "react-router";
 import Footer from "~/components/elements/Footer";
 import { ThemeProvider } from "~/components/context/theme-provider";
 import { Navbar } from "~/components/elements/Navbar";
@@ -20,9 +20,28 @@ export default function Index() {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  const mustUnprotectedRoutes = ["/login", "/register"];
+  const url = new URL(request.url);
+
+  const { getUserFromRequest, refreshSession } = await import(
+    "~/lib/auth.server"
+  );
+
+  const decodeJWT = await getUserFromRequest(request);
+
+  if (decodeJWT && mustUnprotectedRoutes.includes(url.pathname)) {
+    return redirect("/");
+  }
+
+  if (!decodeJWT) {
+    const refreshToken = await refreshSession(request);
+    if (!refreshToken && !mustUnprotectedRoutes.includes(url.pathname) && url.pathname !== "/") {
+      return redirect("/login");
+    }
+  }
+
   return {
-    isLoggedIn: true,
-    token: "",
-    ok: true,
+    user: decodeJWT,
+    isLoggedIn: !!decodeJWT,
   };
 }
