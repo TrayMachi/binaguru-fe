@@ -18,7 +18,7 @@ import { AlignJustify, LogOut, User, X } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { ThemeToggler } from "~/components/ThemeToggler";
 import type { loader } from "~/routes/_page";
-import { useLogout } from '~/hooks/useLogout';
+import { useLogout } from "~/hooks/useLogout";
 
 export const Navbar = () => {
   const data = useLoaderData<typeof loader>();
@@ -61,7 +61,7 @@ export const Navbar = () => {
                 <PopoverTrigger asChild className="max-md:hidden">
                   <button className="max-md:hidden group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer">
                     <p className="text-s7 text-black dark:text-white max-sm:hidden font-space">
-                      Aileen Josephine
+                      {data.user?.name}
                     </p>
                     <Chevron
                       className={`${
