@@ -48,7 +48,7 @@ export const Navbar = () => {
           {data?.isLoggedIn ? (
             <div className="flex gap-8 lg:gap-13 items-center">
               <Link
-                to="/modul"
+                to="/course"
                 className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
                 Modul Pelatihan
@@ -115,7 +115,7 @@ export const Navbar = () => {
                     </Link>
 
                     <Link
-                      to="/search"
+                      to="/course"
                       className="text-s7 text-black dark:text-white font-space"
                     >
                       Course Pelatihan
