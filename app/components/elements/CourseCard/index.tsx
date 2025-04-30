@@ -28,7 +28,7 @@ export function CourseCard({
   return (
     <div
       className={cn(
-        "flex flex-col bg-white dark:bg-[#2A2A2A] rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-5 gap-3 h-fit max-md:w-[300px]",
+        "flex flex-col bg-white dark:bg-[#2A2A2A] rounded-[16px] shadow-sm hover:shadow-md transition-shadow p-5 gap-3 h-fit max-md:w-[300px] text-black dark:text-white",
         className
       )}
     >

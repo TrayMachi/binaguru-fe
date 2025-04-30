@@ -46,12 +46,17 @@ export default function SearchModule() {
   ];
 
   return (
-    <div className="relative overflow-clip h-fit grow w-screen flex flex-col justify-start items-start text-black pb-10">
+    <div className="relative overflow-clip h-fit grow w-screen flex flex-col justify-start items-start text-black pb-10 max-md:-mt-10">
       <div className="w-full h-fit overflow-hidden md:hidden z-10">
         <img
           src={getAsset("/searchimgmobile.webp")}
           alt="search-module"
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-top dark:hidden"
+        />
+        <img
+          src={getAsset("/searchimgmobiledark.webp")}
+          alt="search-module"
+          className="w-full h-full object-cover object-top hidden dark:block"
         />
       </div>
       <div className="w-full h-fit relative bg-tosca-600 dark:bg-tosca-800 max-md:-mt-4 py-7 px-6 md:py-16 md:px-10 lg:py-24 lg:px-20 z-[9]">
@@ -95,12 +100,17 @@ export default function SearchModule() {
           <img
             src={getAsset("/searchimg.webp")}
             alt="search-module"
-            className="w-full h-full object-cover object-left"
+            className="w-full h-full object-cover object-left dark:hidden"
+          />
+          <img
+            src={getAsset("/searchimgdark.webp")}
+            alt="search-module"
+            className="w-full h-full object-cover object-left hidden dark:block"
           />
         </div>
       </div>
       <div className="flex flex-row w-full items-start justify-between">
-        <div className="w-fit pt-[60px] px-20 border-r-[1px] border-border max-lg:hidden space-y-5">
+        <div className="w-fit pt-[60px] px-20 border-r-[1px] border-border max-lg:hidden space-y-5 text-black dark:text-white">
           <div className="font-space text-s4">Filters</div>
           <div className="space-y-7">
             <div className="space-y-3">
