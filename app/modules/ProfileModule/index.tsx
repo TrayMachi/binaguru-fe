@@ -1,9 +1,12 @@
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAsset } from "~/lib/getAsset";
+import type { UserResponse } from "./loader";
 
 export default function ProfileModule() {
+  const data = useLoaderData() as UserResponse;
+
   return (
     <div className="relative overflow-clip h-fit min-h-screen grow w-screen flex flex-col gap-6 md:gap-7 lg:gap-8 justify-start items-start">
       <div className="w-full flex flex-col gap-8 z-10 justify-end items-end text-black dark:text-white px-5 py-8 md:px-10 md:py-14 lg:px-20 lg:py-20">
@@ -18,18 +21,20 @@ export default function ProfileModule() {
             </div>
 
             <div className="space-y-2 w-full text-center">
-              <div className="font-suez text-h6">Aileen Josephine</div>
-              <div className="font-space text-b7">
-                aileenjosephine@gmail.com
-              </div>
+              <div className="font-suez text-h6">{data.user.username}</div>
+              <div className="font-space text-b7">{data.user.email}</div>
             </div>
           </div>
 
           <div className="w-full p-6 md:p-11 bg-white dark:bg-black rounded-[16px] shadow-md flex flex-col lg:flex-row justify-between gap-6 md:gap-7">
             <div className="flex flex-col gap-6 w-full">
               <div className="flex flex-row justify-between items-center">
-                <div className="font-space text-b8 md:text-b7 text-[#888888]">Lokasi</div>
-                <div className="font-space text-s8 md:text-s7">Jakarta</div>
+                <div className="font-space text-b8 md:text-b7 text-[#888888]">
+                  Lokasi
+                </div>
+                <div className="font-space text-s8 md:text-s7">
+                  {data.user.location}
+                </div>
               </div>
               <div className="flex flex-row justify-between items-center">
                 <div className="font-space text-b8 md:text-b7 text-[#888888]">
@@ -41,13 +46,17 @@ export default function ProfileModule() {
                 <div className="font-space text-b8 md:text-b7 text-[#888888]">
                   Pengalaman Mengajar
                 </div>
-                <div className="font-space text-s8 md:text-s7">5 tahun</div>
+                <div className="font-space text-s8 md:text-s7">
+                  {data.user.yoe} tahun
+                </div>
               </div>
               <div className="flex flex-row justify-between items-center">
                 <div className="font-space text-b8 md:text-b7 text-[#888888]">
                   Jenjang yang Diajarkan
                 </div>
-                <div className="font-space text-s8 md:text-s7">SMA</div>
+                <div className="font-space text-s8 md:text-s7">
+                  {data.user.level}
+                </div>
               </div>
             </div>
 
@@ -59,8 +68,7 @@ export default function ProfileModule() {
                   Kendala dalam Mengajar
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  Akses ke materi, teknolog & infrastruktur, pembelajaran jarak
-                  jauh
+                  {data.user.cons.join(", ")}
                 </div>
               </div>
               <div className="flex flex-col justify-between items-start">
@@ -68,15 +76,16 @@ export default function ProfileModule() {
                   Minat untuk Pelatihan
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  Pengelolaan kelas, pembelajaran daring, teknologi dalam
-                  pendidikan
+                  {data.user.pros.join(", ")}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <Button variant="ghost">Edit Profile</Button>
+        <Link to="/profile/edit">
+          <Button variant="ghost">Edit Profile</Button>
+        </Link>
       </div>
 
       <div className="w-full h-fit overflow-hidden z-1 absolute bottom-0 left-0">
