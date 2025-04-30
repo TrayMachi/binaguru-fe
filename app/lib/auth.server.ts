@@ -66,11 +66,7 @@ export async function refreshSession(request: Request) {
   const refreshToken = await getRefreshToken(request);
 
   if (!refreshToken) {
-    throw redirect("/login", {
-      headers: {
-        "Set-Cookie": `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
-      },
-    });
+    return null;
   }
 
   const refreshRes = await fetch(
@@ -85,11 +81,7 @@ export async function refreshSession(request: Request) {
   const refreshData = await refreshRes.json();
 
   if (refreshRes.status !== 200) {
-    throw redirect("/login", {
-      headers: {
-        "Set-Cookie": `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
-      },
-    });
+    return null;
   }
   const { id_token, refresh_token } = refreshData;
 
@@ -99,5 +91,5 @@ export async function refreshSession(request: Request) {
     await refreshCookie.serialize(refresh_token);
   }
 
-  return id_token;
+  return id_token as string;
 }

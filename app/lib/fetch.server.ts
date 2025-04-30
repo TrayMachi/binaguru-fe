@@ -17,6 +17,15 @@ export const fetcher = async <T>(
 ): Promise<ResponseType<T>> => {
   const idToken = await refreshSession(request);
 
+  if (!idToken) {
+    return {
+      code: 401,
+      success: false,
+      message: "Unauthorized",
+      error: "Unauthorized",
+    };
+  }
+
   const res = await fetch(`${process.env.API_URL}${url}`, {
     ...options,
     headers: {
