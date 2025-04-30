@@ -9,7 +9,7 @@ export default function Index() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <main className="text-black dark:text-white font-space">
         <Navbar />
-        <main className="pt-[64.5px] md:pt-[72px] lg:pt-[78px] font-space max-w-[1920px] bg-frame dark:bg-[#1A1A1A] mx-auto min-h-screen overflow-x-hidden flex flex-col">
+        <main className="pt-[64.5px] md:pt-[72px] lg:pt-[78px] font-space max-w-[1920px] bg-frame dark:bg-[#1A1A1A] mx-auto min-h-screen overflow-x-hidden">
           <Outlet />
           <Toaster />
         </main>
