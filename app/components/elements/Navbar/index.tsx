@@ -51,6 +51,13 @@ export const Navbar = () => {
               </Link>
 
               <Link
+                to="/rpp"
+                className="text-s7 text-black dark:text-white font-space"
+              >
+                RPP
+              </Link>
+
+              <Link
                 to="/tanya-ai"
                 className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
@@ -115,6 +122,13 @@ export const Navbar = () => {
                       className="text-s7 text-black dark:text-white font-space"
                     >
                       Course Pelatihan
+                    </Link>
+
+                    <Link
+                      to="/rpp"
+                      className="text-s7 text-black dark:text-white font-space"
+                    >
+                      RPP
                     </Link>
 
                     <Link
