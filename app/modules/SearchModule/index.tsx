@@ -403,7 +403,7 @@ export default function SearchModule() {
           </div>
           <div className="space-y-4 md:space-y-5">
             <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
-              Rekomendasi
+              Semua Course
             </div>
             <div className="max-md:gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
               {dummyCourseData.map((course) => (
