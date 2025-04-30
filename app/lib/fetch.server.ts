@@ -1,0 +1,46 @@
+import {
+  refreshSession,
+} from "./auth.server";
+
+export interface ResponseType<T> {
+  code: number;
+  success: boolean;
+  message: string;
+  error?: string; // usually for zod errors
+  data?: T;
+}
+
+export const fetcher = async <T>(
+  url: string,
+  request: Request,
+  options?: RequestInit
+): Promise<ResponseType<T>> => {
+  const idToken = await refreshSession(request);
+
+  const res = await fetch(`${process.env.API_URL}${url}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${idToken}`,
+      ...options?.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const errorResponse = await res.json();
+    return {
+      code: res.status,
+      success: false,
+      message: errorResponse.message || "An error occurred",
+      error: errorResponse.error || "An error occurred",
+    };
+  }
+
+  const data = await res.json();
+  return {
+    code: res.status,
+    success: true,
+    message: "Success",
+    data,
+  };
+};
