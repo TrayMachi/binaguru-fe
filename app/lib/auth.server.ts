@@ -1,5 +1,5 @@
 // src/lib/auth.server.ts
-import { createCookie } from "react-router";
+import { createCookie, redirect } from "react-router";
 import jwt from "jsonwebtoken";
 
 export type UserPayload = {
@@ -60,4 +60,44 @@ export async function getUserFromRequest(request: Request) {
   if (!cookie) return null;
 
   return decodeJWT(cookie);
+}
+
+export async function refreshSession(request: Request) {
+  const refreshToken = await getRefreshToken(request);
+
+  if (!refreshToken) {
+    throw redirect("/login", {
+      headers: {
+        "Set-Cookie": `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+      },
+    });
+  }
+
+  const refreshRes = await fetch(
+    `https://securetoken.googleapis.com/v1/token?key=${process.env.GOOGLE_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `grant_type=refresh_token&refresh_token=${refreshToken}`,
+    }
+  );
+
+  const refreshData = await refreshRes.json();
+
+  if (refreshRes.status !== 200) {
+    throw redirect("/login", {
+      headers: {
+        "Set-Cookie": `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+      },
+    });
+  }
+  const { id_token, refresh_token } = refreshData;
+
+  await sessionCookie.serialize(id_token);
+
+  if (refresh_token) {
+    await refreshCookie.serialize(refresh_token);
+  }
+
+  return id_token;
 }
