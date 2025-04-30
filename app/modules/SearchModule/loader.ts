@@ -1,4 +1,5 @@
-import type { LoaderFunctionArgs } from "react-router";
+import { redirect, type LoaderFunctionArgs } from "react-router";
+import { getUserFromRequest } from "~/lib/auth.server";
 import { fetcher } from "~/lib/fetch.server";
 
 export interface CourseBase {
@@ -32,6 +33,12 @@ export interface CourseResponse {
 }
 
 export async function SearchLoader({ request }: LoaderFunctionArgs) {
+  const user = await getUserFromRequest(request);
+
+  if (!user) {
+    return redirect("/login");
+  }
+
   const response = await fetcher<CourseResponse>("courses", request, {
     method: "GET",
   });

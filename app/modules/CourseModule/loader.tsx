@@ -1,4 +1,5 @@
-import type { LoaderFunctionArgs } from "react-router";
+import { redirect, type LoaderFunctionArgs } from "react-router";
+import { getUserFromRequest } from "~/lib/auth.server";
 import { fetcher } from "~/lib/fetch.server";
 import type { ResponseInterface } from "~/lib/utils";
 
@@ -33,6 +34,12 @@ export interface CourseResponse {
 }
 
 export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
+  const user = await getUserFromRequest(request);
+
+  if (!user) {
+    return redirect("/login");
+  }
+  
   const { id } = params;
 
   const response = await fetcher<CourseResponse>(`courses/${id}`, request, {
