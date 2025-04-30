@@ -52,7 +52,7 @@ export const Navbar = () => {
 
               <Link
                 to="/rpp"
-                className="text-s7 text-black dark:text-white font-space"
+                className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
                 RPP
               </Link>
