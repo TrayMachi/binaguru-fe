@@ -51,6 +51,13 @@ export const Navbar = () => {
               </Link>
 
               <Link
+                to="/rpp"
+                className="max-md:hidden text-s7 text-black dark:text-white font-space"
+              >
+                RPP
+              </Link>
+
+              <Link
                 to="/tanya-ai"
                 className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
@@ -118,6 +125,13 @@ export const Navbar = () => {
                     </Link>
 
                     <Link
+                      to="/rpp"
+                      className="text-s7 text-black dark:text-white font-space"
+                    >
+                      RPP
+                    </Link>
+
+                    <Link
                       to="/tanya-ai"
                       className="text-s7 text-black dark:text-white font-space"
                     >
@@ -132,7 +146,7 @@ export const Navbar = () => {
                           </p>
                           <Chevron
                             className={`${
-                              popoverOpen ? "-rotate-180" : ""
+                              popoverOpen2 ? "-rotate-180" : ""
                             } duration-300`}
                             size="w-6 h-6 max-md:w-5 max-md:h-5"
                             fill="fill-black dark:fill-white"
