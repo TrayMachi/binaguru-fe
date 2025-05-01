@@ -26,7 +26,9 @@ export const fetcher = async <T>(
     };
   }
 
-  const res = await fetch(`${process.env.API_URL}${url}`, {
+  const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+
+  const res = await fetch(`${process.env.API_URL}${cleanUrl}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
