@@ -46,6 +46,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     }
   }
 
+  if (!decodeJWT && !mustUnprotectedRoutes.includes(url.pathname) && url.pathname !== "/") {
+    return redirect("/login");
+  }
+
   return {
     user: decodeJWT,
     isLoggedIn: !!decodeJWT,
