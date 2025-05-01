@@ -1,9 +1,8 @@
 import { redirect, type LoaderFunctionArgs } from "react-router";
 import { getUserFromRequest } from "~/lib/auth.server";
 import { fetcher } from "~/lib/fetch.server";
-import type { ResponseInterface } from "~/lib/utils";
 
-export interface Course {
+export interface CourseBase {
   id: string;
   title: string;
   description: string;
@@ -11,46 +10,46 @@ export interface Course {
   language: string;
   courseType: string;
   courseSubject: string;
-  progress: number;
-  modules?: {
-    id: string;
-    title: string;
-    hasAssignment: boolean;
-  }[];
 }
 
-export interface Modules {
-  id: string;
-  title: string;
-  hasAssignment: boolean;
+export interface MyCourse extends CourseBase {
+  progress: number;
+  ownerCons: string[];
+}
+
+export interface RecommendedCourse extends CourseBase {
+  user: {
+    cons: string[];
+  };
 }
 
 export interface CourseResponse {
   code: number;
   success: boolean;
   message: string;
-  course: Course;
-  modules: Modules[];
+  courseku: MyCourse[];
+  rekomendasi: RecommendedCourse[];
+  allcourse: RecommendedCourse[];
 }
 
-export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
+export async function SearchLoader({ request }: LoaderFunctionArgs) {
   const user = await getUserFromRequest(request);
 
   if (!user) {
     return redirect("/login");
   }
-  
-  const { id } = params;
 
-  const response = await fetcher<CourseResponse>(`courses/${id}`, request, {
+  const response = await fetcher<CourseResponse>("courses", request, {
     method: "GET",
   });
 
   if (!response.success) {
     return {
-      message: response.message || "Failed to load course",
+      message: response.message || "Failed to load courses",
       success: false,
-      courseku: { modules: [] },
+      courseku: [],
+      rekomendasi: [],
+      allcourse: [],
     };
   }
 

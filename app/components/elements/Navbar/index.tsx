@@ -47,7 +47,7 @@ export const Navbar = () => {
                 to="/course"
                 className="max-md:hidden text-s7 text-black dark:text-white font-space"
               >
-                Modul Pelatihan
+                Course Pelatihan
               </Link>
 
               <Link
@@ -81,7 +81,7 @@ export const Navbar = () => {
                 </PopoverTrigger>
                 <PopoverContent className="z-50 translate-y-6 -translate-x-2 space-y-6">
                   <Link
-                    to="/profil"
+                    to="/profile"
                     className={cn(
                       "flex flex-row gap-2 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white  text-s7"
                     )}
@@ -155,7 +155,7 @@ export const Navbar = () => {
                       </PopoverTrigger>
                       <PopoverContent className="z-50 bg-transparent px-0 translate-x-10 -translate-y-2 space-y-8 shadow-none">
                         <Link
-                          to="/profil"
+                          to="/profile"
                           className={cn(
                             "flex flex-row gap-2 w-full text-left duration-300 rounded-xl font-space text-black dark:text-white text-s7"
                           )}
