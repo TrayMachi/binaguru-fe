@@ -1,4 +1,4 @@
-import { BookMarked, Filter, Search, X } from "lucide-react";
+import { ArrowRight, BookMarked, Filter, Search, X } from "lucide-react";
 import { CourseCard } from "~/components/elements/CourseCard";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
@@ -13,6 +13,13 @@ import {
 } from "~/components/ui/drawer";
 import { useLoaderData } from "react-router";
 import type { CourseResponse } from "./loader";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 export default function SearchModule() {
   const data = useLoaderData() as CourseResponse;
@@ -677,6 +684,156 @@ export default function SearchModule() {
           </div>
         </div>
       </div>
+
+      <Drawer direction="bottom">
+        <DrawerTrigger className="md:hidden">
+          <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-1 py-4 px-5 text-white bg-tosca-600 rounded-[24px]">
+            <div className="font-space text-s8">Tanya AI</div>
+          </div>
+        </DrawerTrigger>
+        <DrawerContent className="bg-white dark:bg-[#2A2A2A] md:hidden w-full thin-scrollbar overflow-y-auto">
+          <DrawerHeader className="gap-8 justify-between items-center flex-row flex py-4 px-5">
+            <div className="flex flex-row items-center justify-center gap-3">
+              <div className="font-suez text-h6 lg:text-h5 text-tosca-500">
+                Tanya AI
+              </div>
+              <div className="py-2 px-4 flex flex-row gap-[6px] border-[1px] border-border rounded-full">
+                <div className="font-space text-b8">Powered by</div>
+              </div>
+            </div>
+            <DrawerClose className="self-end text-black dark:text-white">
+              <X />
+            </DrawerClose>
+          </DrawerHeader>
+          <div className="w-full h-[2pt] bg-border" />
+          <div className="flex flex-col w-full h-full">
+            <div className="w-full h-fit py-4 px-5 gap-8 flex flex-col justify-end items-start text-start">
+              <div className="w-[90%] font-space text-b8 p-3 bg-tosca-050 dark:bg-tosca-800 rounded-[8px] self-end">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8 p-3 bg-tosca-050 dark:bg-tosca-800 rounded-[8px] self-end">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+            </div>
+            <div className="w-full h-fit">
+              <div className="w-full h-[0.5pt] bg-border" />
+              <div className="p-5 pb-4 w-full flex-row flex gap-1 items-center justify-between !h-[92px]">
+                <Input placeholder="Type here" className="w-[145%]" />
+                <Button variant="secondary" className="!h-12 w-[20%] !px-4">
+                  <ArrowRight />
+                </Button>
+              </div>
+              <div className="pb-5 px-5 flex flex-row gap-[6pt] items-center justify-center w-full">
+                <div className="font-space text-b8 w-fit whitespace-nowrap">
+                  Pilih mode:
+                </div>
+                <Select>
+                  <SelectTrigger className="w-full !py-2 !px-3 !h-8 !rounded-full">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="true">
+                      Tambahkan Konteks Profil Saya
+                    </SelectItem>
+                    <SelectItem value="false">
+                      Tidak Tambahkan Konteks Profil Saya
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+        </DrawerContent>
+      </Drawer>
+
+      <Drawer direction="right">
+        <DrawerTrigger className="max-md:hidden">
+          <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-1 py-4 px-5 text-white bg-tosca-600 rounded-[24px]">
+            <div className="font-space text-s7">Tanya AI</div>
+          </div>
+        </DrawerTrigger>
+        <DrawerContent className="bg-white dark:bg-[#2A2A2A] max-md:hidden w-[429px]">
+          <DrawerHeader className="gap-8 justify-between items-center flex-row flex py-4 px-5">
+            <div className="flex flex-row items-center justify-center gap-3">
+              <div className="font-suez text-h6 lg:text-h5 text-tosca-500">
+                Tanya AI
+              </div>
+              <div className="py-2 px-4 flex flex-row gap-[6px] border-[1px] border-border rounded-full">
+                <div className="font-space text-b8">Powered by</div>
+              </div>
+            </div>
+            <DrawerClose className="self-end text-black dark:text-white">
+              <X />
+            </DrawerClose>
+          </DrawerHeader>
+          <div className="w-full h-[1pt] bg-border" />
+          <div className="flex flex-col w-full h-full justify-between">
+            <div className="w-full h-full py-4 px-5 gap-8 flex flex-col justify-end items-start text-start overflow-y-auto thin-scrollbar">
+              <div className="w-[90%] font-space text-b8 p-3 bg-tosca-050 dark:bg-tosca-800 rounded-[8px] self-end">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8 p-3 bg-tosca-050 dark:bg-tosca-800 rounded-[8px] self-end">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+              <div className="w-[90%] font-space text-b8">
+                Lorem ipsum dolor sit amet consectetur. Feugiat scelerisque
+                velit nulla mattis mattis vitae nunc nisi. Duis purus
+                ullamcorper ultricies commodo elementum sagittis porttitor.
+              </div>
+            </div>
+            <div className="w-full h-fit">
+              <div className="w-full h-[0.5pt] bg-border" />
+              <div className="p-5 pb-4 w-full flex-row flex gap-1 items-center justify-between !h-[92px]">
+                <Input placeholder="Type here" className="w-[145%]" />
+                <Button variant="secondary" className="!h-12 w-[20%] !px-4">
+                  <ArrowRight />
+                </Button>
+              </div>
+              <div className="pb-5 px-5 flex flex-row gap-[6pt] items-center justify-center w-full">
+                <div className="font-space text-b8 w-fit whitespace-nowrap">
+                  Pilih mode:
+                </div>
+                <Select>
+                  <SelectTrigger className="w-full !py-2 !px-3 !h-8 !rounded-full">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="true">
+                      Tambahkan Konteks Profil Saya
+                    </SelectItem>
+                    <SelectItem value="false">
+                      Tidak Tambahkan Konteks Profil Saya
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
