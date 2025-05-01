@@ -1,11 +1,10 @@
-import { ArrowLeft } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAsset } from "~/lib/getAsset";
-import type { UserResponse } from "./loader";
+import type { ProfileLoader } from "./loader";
 
 export default function ProfileModule() {
-  const data = useLoaderData() as UserResponse;
+  const { user } = useLoaderData<typeof ProfileLoader>();
 
   return (
     <div className="relative overflow-clip h-fit min-h-screen grow w-screen flex flex-col gap-6 md:gap-7 lg:gap-8 justify-start items-start">
@@ -21,8 +20,10 @@ export default function ProfileModule() {
             </div>
 
             <div className="space-y-2 w-full text-center">
-              <div className="font-suez text-h6">{data.user.username}</div>
-              <div className="font-space text-b7">{data.user.email}</div>
+              <div className="font-suez text-h6">
+                {user?.username}
+              </div>
+              <div className="font-space text-b7">{user?.email}</div>
             </div>
           </div>
 
@@ -33,7 +34,7 @@ export default function ProfileModule() {
                   Lokasi
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  {data.user.location}
+                  {user?.location}
                 </div>
               </div>
               <div className="flex flex-row justify-between items-center">
@@ -47,7 +48,7 @@ export default function ProfileModule() {
                   Pengalaman Mengajar
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  {data.user.yoe} tahun
+                  {user?.yoe} tahun
                 </div>
               </div>
               <div className="flex flex-row justify-between items-center">
@@ -55,7 +56,7 @@ export default function ProfileModule() {
                   Jenjang yang Diajarkan
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  {data.user.level}
+                  {user?.level}
                 </div>
               </div>
             </div>
@@ -68,7 +69,7 @@ export default function ProfileModule() {
                   Kendala dalam Mengajar
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  {data.user.cons.join(", ")}
+                  {user?.cons.join(", ")}
                 </div>
               </div>
               <div className="flex flex-col justify-between items-start">
@@ -76,7 +77,7 @@ export default function ProfileModule() {
                   Minat untuk Pelatihan
                 </div>
                 <div className="font-space text-s8 md:text-s7">
-                  {data.user.pros.join(", ")}
+                  {user?.pros.join(", ")}
                 </div>
               </div>
             </div>

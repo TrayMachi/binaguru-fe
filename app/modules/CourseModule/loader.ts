@@ -26,9 +26,6 @@ export interface Modules {
 }
 
 export interface CourseResponse {
-  code: number;
-  success: boolean;
-  message: string;
   course: Course;
   modules: Modules[];
 }

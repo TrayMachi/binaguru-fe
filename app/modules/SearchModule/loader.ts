@@ -24,9 +24,6 @@ export interface RecommendedCourse extends CourseBase {
 }
 
 export interface CourseResponse {
-  code: number;
-  success: boolean;
-  message: string;
   courseku: MyCourse[];
   rekomendasi: RecommendedCourse[];
   allcourse: RecommendedCourse[];

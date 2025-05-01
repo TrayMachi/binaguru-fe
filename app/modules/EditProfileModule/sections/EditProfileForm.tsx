@@ -17,7 +17,6 @@ import { toast } from "~/hooks/use-toast";
 
 export const EditProfileForm = () => {
   const userData = useLoaderData();
-  console.log("userData", userData);
   const actionData = useActionData<typeof EditProfileAction>();
 
   const [level, setLevel] = useState(userData?.level || "");

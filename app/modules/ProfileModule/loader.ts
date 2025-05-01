@@ -14,13 +14,6 @@ export interface UserBase {
   level: string;
 }
 
-export interface UserResponse {
-  code: number;
-  success: boolean;
-  message: string;
-  user: UserBase;
-}
-
 export async function ProfileLoader({ request }: LoaderFunctionArgs) {
   const user = await getUserFromRequest(request);
 
@@ -28,7 +21,7 @@ export async function ProfileLoader({ request }: LoaderFunctionArgs) {
     return redirect("/login");
   }
 
-  const response = await fetcher<UserResponse>(`user`, request, {
+  const response = await fetcher<UserBase>(`user`, request, {
     method: "GET",
   });
 
