@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Form, useActionData, useNavigation } from "react-router";
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "react-router";
 import { Input } from "~/components/ui/input";
 import type { EditProfileAction } from "../action";
 import { LevelCombobox } from "~/components/elements/LevelCombobox";
@@ -11,8 +16,11 @@ import { Button } from "~/components/ui/button";
 import { toast } from "~/hooks/use-toast";
 
 export const EditProfileForm = () => {
+  const userData = useLoaderData();
+  console.log("userData", userData);
   const actionData = useActionData<typeof EditProfileAction>();
-  const [level, setLevel] = useState("");
+
+  const [level, setLevel] = useState(userData?.level || "");
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
@@ -45,11 +53,11 @@ export const EditProfileForm = () => {
           required
           id="username"
           name="username"
+          defaultValue={userData?.username || ""}
           disabled={isSubmitting}
           autoComplete="username"
           label="Nama Lengkap"
           placeholder="Ketik nama lengkap Anda di sini..."
-          layout="col-span-2"
           error={
             typeof actionData?.message === "object" &&
             "username" in actionData.message
@@ -62,7 +70,7 @@ export const EditProfileForm = () => {
           id="email"
           type="email"
           name="email"
-          disabled={isSubmitting}
+          defaultValue={userData?.email || ""}
           autoComplete="email"
           label="Email"
           placeholder="Ketik email Anda di sini..."
@@ -72,27 +80,13 @@ export const EditProfileForm = () => {
               ? actionData.message.email?.[0]
               : undefined
           }
-        />
-        <Input
-          required
-          id="password"
-          name="password"
-          type="password"
-          disabled={isSubmitting}
-          autoComplete="password"
-          label="Password"
-          placeholder="Minimal 8 karakter (huruf, angka, karakter spesial)"
-          error={
-            typeof actionData?.message === "object" &&
-            "password" in actionData.message
-              ? actionData.message.password?.[0]
-              : undefined
-          }
+          disabled
         />
         <Input
           required
           id="location"
           name="location"
+          defaultValue={userData?.location || ""}
           disabled={isSubmitting}
           autoComplete="location"
           label="Lokasi"
@@ -109,6 +103,9 @@ export const EditProfileForm = () => {
           id="birthDate"
           type="date"
           name="birthDate"
+          defaultValue={
+            userData?.birthDate ? userData.birthDate.split("T")[0] : ""
+          }
           disabled={isSubmitting}
           autoComplete="username"
           label="Tanggal Lahir"
@@ -124,11 +121,12 @@ export const EditProfileForm = () => {
           required
           id="yoe"
           name="yoe"
+          defaultValue={userData?.yoe || ""}
           disabled={isSubmitting}
           autoComplete="yoe"
           type="number"
           min="0"
-          label="Pengalaman Menagajar"
+          label="Pengalaman Mengajar"
           placeholder="Ketik berapa tahun pengalaman anda mengajar..."
           error={
             typeof actionData?.message === "object" &&
@@ -154,17 +152,17 @@ export const EditProfileForm = () => {
             <span className="text-red-600"> *</span>
           </Label>
           <div className="md:p-5 p-4 mt-2 dark:bg-[#2A2A2A] bg-white rounded-lg border flex flex-col gap-5">
-            {cons.map((cons, index) => (
+            {cons.map((con, index) => (
               <div className="flex items-center gap-2" key={index}>
                 <Checkbox
+                  defaultChecked={userData?.cons?.includes(con)}
                   disabled={isSubmitting}
-                  key={index}
-                  id={cons}
-                  name={cons}
-                  value={cons}
+                  id={con}
+                  name={con}
+                  value={con}
                 />
-                <label htmlFor={cons} className="text-b8">
-                  {cons}
+                <label htmlFor={con} className="text-b8">
+                  {con}
                 </label>
               </div>
             ))}
@@ -188,6 +186,7 @@ export const EditProfileForm = () => {
             {pros.map((pros, index) => (
               <div className="flex items-center gap-2" key={index}>
                 <Checkbox
+                  defaultChecked={userData?.pros?.includes(pros)}
                   disabled={isSubmitting}
                   key={index}
                   id={pros}
@@ -215,7 +214,7 @@ export const EditProfileForm = () => {
           type="submit"
           className="max-w-23 col-span-2 justify-self-end"
         >
-          Masuk
+          Edit
         </Button>
       </Form>
     </section>
