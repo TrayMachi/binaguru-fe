@@ -1,5 +1,5 @@
 import { redirect, type ActionFunctionArgs } from "react-router";
-import { sessionCookie, refreshCookie } from "~/lib/auth";
+import { sessionCookie, refreshCookie } from "~/lib/auth.server";
 import { z } from "zod";
 import type { ResponseInterface } from "~/lib/utils";
 

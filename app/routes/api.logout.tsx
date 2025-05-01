@@ -1,5 +1,5 @@
 import { redirect, type ActionFunctionArgs } from "react-router";
-import { sessionCookie, refreshCookie } from "~/lib/auth";
+import { sessionCookie, refreshCookie } from "~/lib/auth.server";
 
 export async function action(args: ActionFunctionArgs) {
   const ddestructSession = await sessionCookie.serialize("", { maxAge: 0 });

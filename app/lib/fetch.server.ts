@@ -1,4 +1,4 @@
-import { refreshSession } from "./auth";
+import { refreshSession } from "./auth.server";
 
 export interface ResponseType<T> {
   code: number;

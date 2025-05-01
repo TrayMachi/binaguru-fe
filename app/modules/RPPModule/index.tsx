@@ -1,5 +1,11 @@
 import { FileStack } from "lucide-react";
-import { Form, useActionData, useNavigate, useNavigation } from "react-router";
+import {
+  Form,
+  Link,
+  useActionData,
+  useNavigate,
+  useNavigation,
+} from "react-router";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
@@ -68,15 +74,12 @@ export const RPPModule = () => {
           }
         />
         <div className="flex justify-between">
-          <Button
-            type="button"
-            disabled={isSubmitting}
-            onClick={() => navigate("/rpp/history")}
-            variant={"secondary"}
-          >
-            <FileStack />
-            Lihat Riwayat RPP Saya
-          </Button>
+          <Link to={"/rpp/collection"}>
+            <Button type="button" disabled={isSubmitting} variant={"secondary"}>
+              <FileStack />
+              Lihat Riwayat RPP Saya
+            </Button>
+          </Link>
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Sedang dibuat..." : "Buat RPP"}
           </Button>

@@ -1,6 +1,6 @@
 import { redirect, type LoaderFunctionArgs } from "react-router";
-import { getUserFromRequest } from "~/lib/auth";
-import { fetcher } from "~/lib/fetch";
+import { getUserFromRequest } from "~/lib/auth.server";
+import { fetcher } from "~/lib/fetch.server";
 import type { ResponseInterface } from "~/lib/utils";
 
 export interface Course {

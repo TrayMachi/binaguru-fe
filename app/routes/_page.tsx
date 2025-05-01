@@ -24,7 +24,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
 
   const { getUserFromRequest, refreshSession, sessionCookie } = await import(
-    "~/lib/auth"
+    "~/lib/auth.server"
   );
 
   const decodeJWT = await getUserFromRequest(request);
