@@ -45,11 +45,11 @@ export const fetcher = async <T>(
     };
   }
 
-  const data = await res.json();
+  const data: ResponseType<T> = await res.json();
   return {
-    code: res.status,
-    success: true,
+    code: data.code || res.status,
+    success: data.success,
     message: "Success",
-    data,
+    data: data.data,
   };
 };
