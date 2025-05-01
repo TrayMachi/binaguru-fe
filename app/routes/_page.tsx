@@ -24,7 +24,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
 
   const { getUserFromRequest, refreshSession, sessionCookie } = await import(
-    "~/lib/auth.server"
+    "~/lib/auth"
   );
 
   const decodeJWT = await getUserFromRequest(request);
@@ -46,7 +46,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     }
   }
 
-  if (!decodeJWT && !mustUnprotectedRoutes.includes(url.pathname) && url.pathname !== "/") {
+  if (
+    !decodeJWT &&
+    !mustUnprotectedRoutes.includes(url.pathname) &&
+    url.pathname !== "/"
+  ) {
     return redirect("/login");
   }
 

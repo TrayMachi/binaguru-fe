@@ -1,6 +1,4 @@
-import {
-  refreshSession,
-} from "./auth.server";
+import { refreshSession } from "./auth";
 
 export interface ResponseType<T> {
   code: number;
@@ -26,7 +24,7 @@ export const fetcher = async <T>(
     };
   }
 
-  const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+  const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
 
   const res = await fetch(`${process.env.API_URL}${cleanUrl}`, {
     ...options,

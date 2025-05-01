@@ -69,13 +69,15 @@ export const RPPModule = () => {
         />
         <div className="flex justify-between">
           <Button
-            onClick={() => navigate("/rpp/koleksi")}
+            type="button"
+            disabled={isSubmitting}
+            onClick={() => navigate("/rpp/history")}
             variant={"secondary"}
           >
             <FileStack />
             Lihat Riwayat RPP Saya
           </Button>
-          <Button type="submit">
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Sedang dibuat..." : "Buat RPP"}
           </Button>
         </div>

@@ -91,7 +91,7 @@ export const Navbar = () => {
                   </Link>
 
                   <button
-                    // onClick={logout}
+                    onClick={logout}
                     className="flex flex-row gap-2 text-s7 w-full text-left duration-300 rounded-xl cursor-pointer font-space text-black dark:text-white"
                   >
                     <LogOut className="w-6 h-6" />

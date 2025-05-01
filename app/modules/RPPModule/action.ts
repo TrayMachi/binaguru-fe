@@ -1,6 +1,6 @@
 import type { ActionFunctionArgs } from "react-router";
 import { z } from "zod";
-import { fetcher } from "~/lib/fetch.server";
+import { fetcher } from "~/lib/fetch";
 import type { RPPInterface } from "./interface";
 
 export async function RPPAction({ request }: ActionFunctionArgs) {

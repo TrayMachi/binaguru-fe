@@ -3,7 +3,7 @@ import { cons as consList, pros as prosList } from "./const";
 import { number, z } from "zod";
 import { levels } from "~/components/elements/LevelCombobox";
 import type { ResponseInterface } from "~/lib/utils";
-import { refreshSession } from "~/lib/auth.server";
+import { refreshSession } from "~/lib/auth";
 
 export async function EditProfileAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
