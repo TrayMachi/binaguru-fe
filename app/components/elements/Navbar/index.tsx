@@ -57,13 +57,6 @@ export const Navbar = () => {
                 RPP
               </Link>
 
-              <Link
-                to="/tanya-ai"
-                className="max-md:hidden text-s7 text-black dark:text-white font-space"
-              >
-                Tanya AI
-              </Link>
-
               <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
                 <PopoverTrigger asChild className="max-md:hidden">
                   <button className="max-md:hidden group flex gap-3 max-sm:gap-2 py-2 items-center text-black dark:text-white fill-black dark:fill-white group cursor-pointer">
@@ -129,13 +122,6 @@ export const Navbar = () => {
                       className="text-s7 text-black dark:text-white font-space"
                     >
                       RPP
-                    </Link>
-
-                    <Link
-                      to="/tanya-ai"
-                      className="text-s7 text-black dark:text-white font-space"
-                    >
-                      Tanya AI
                     </Link>
 
                     <Popover open={popoverOpen2} onOpenChange={setPopoverOpen2}>

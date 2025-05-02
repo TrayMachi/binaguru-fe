@@ -30,11 +30,11 @@ export default function LandingModule() {
         </div>
 
         <div className="flex flex-row gap-5 lg:gap-6">
-          <Link to="/">
+          <Link to="/course">
             <Button>Mulai Pelatihan</Button>
           </Link>
-          <Link to="/tanya-ai">
-            <Button variant={"secondary"}>Tanya AI</Button>
+          <Link to="/rpp">
+            <Button variant={"secondary"}>Buat RPP</Button>
           </Link>
         </div>
       </div>
