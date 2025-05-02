@@ -11,7 +11,7 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "~/components/ui/drawer";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import type { CourseResponse } from "./loader";
 import {
   Select,
@@ -22,6 +22,7 @@ import {
 } from "~/components/ui/select";
 
 export default function SearchModule() {
+  const navigate = useNavigate();
   const data = useLoaderData() as CourseResponse;
 
   return (
@@ -344,7 +345,11 @@ export default function SearchModule() {
                 </Drawer>
               </div>
             </div>
-            <Button variant={"secondary"} className="w-full lg:w-fit">
+            <Button
+              onClick={() => navigate("/course/create")}
+              variant={"secondary"}
+              className="w-full lg:w-fit"
+            >
               Buat Course Sendiri
               <BookMarked />
             </Button>

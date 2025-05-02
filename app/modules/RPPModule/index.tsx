@@ -25,6 +25,7 @@ export const RPPModule = () => {
         title: "RPP Berhasil Dibuat",
         variant: "success",
       });
+      navigate("/rpp/collection");
     } else if (
       actionData &&
       !actionData.success &&
