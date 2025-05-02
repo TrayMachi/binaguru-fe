@@ -32,7 +32,6 @@ export function CourseCard({
         className
       )}
     >
-      {progress && <Progress value={progress} className="w-full" />}
       <div className="w-full h-fit overflow-hidden z-10 rounded-[8px]">
         <img
           src={getAsset(prosImg[pros as keyof typeof prosImg])}

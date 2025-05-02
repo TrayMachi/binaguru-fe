@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import type { ModuleLoader } from "./loader";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft, FileText } from "lucide-react";
@@ -6,6 +6,8 @@ import { marked } from "marked";
 
 export default function ModuleModule() {
   const { module } = useLoaderData<typeof ModuleLoader>();
+
+  const navigate = useNavigate();
 
   function stripMarkdownCodeBlock(md: string) {
     return md.replace(/^```markdown/, "").replace(/```$/, "");
@@ -15,7 +17,7 @@ export default function ModuleModule() {
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col gap-4 justify-start items-start text-black py-10 md:py-14 lg:py-20">
       <div className="w-full flex flex-col gap-6 md:gap-7 lg:gap-8 pb-8 md:pb-12 lg:pb-20 px-5 md:px-10 lg:px-20 text-black dark:text-white">
         <div className="w-full flex flex-row justify-between items-center">
-          <Button variant="ghost" className="w-fit">
+          <Button onClick={() => navigate(-1)} variant="ghost" className="w-fit">
             <ArrowLeft />
             Back
           </Button>
