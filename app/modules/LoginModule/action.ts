@@ -41,11 +41,11 @@ export async function LoginAction({ request }: ActionFunctionArgs) {
     const cookie = await sessionCookie.serialize(idToken);
     const cookie2 = await refreshCookie.serialize(refreshToken);
 
-    return redirect("/", {
-      headers: {
-        "Set-Cookie": `${cookie}, ${cookie2}`,
-      },
-    });
+    const headers = new Headers();
+    headers.append("Set-Cookie", cookie);
+    headers.append("Set-Cookie", cookie2);
+
+    return redirect("/", { headers });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return { message: error.flatten().fieldErrors, success: false };
