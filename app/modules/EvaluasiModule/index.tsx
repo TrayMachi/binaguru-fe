@@ -28,7 +28,7 @@ export default function EvaluasiModule() {
 
       <div className="w-full flex flex-col lg:flex-row gap-6 md:gap-7 text-black dark:text-white justify-start items-start">
         <div className="font-space text-b8 md:text-b7 w-full">
-          {assignment?.description}
+          {evaluasi?.contentMarkdown}
         </div>
       </div>
     </div>
