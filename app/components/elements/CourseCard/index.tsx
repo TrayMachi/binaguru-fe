@@ -34,7 +34,7 @@ export function CourseCard({
     >
       <div className="w-full h-fit overflow-hidden z-10 rounded-[8px]">
         <img
-          src={getAsset(prosImg[pros as keyof typeof prosImg])}
+          src={getAsset(prosImg[pros as keyof typeof prosImg] === undefined ? "/pros_1.webp" : prosImg[pros as keyof typeof prosImg])}
           className="w-full h-full object-cover object-center"
         />
       </div>

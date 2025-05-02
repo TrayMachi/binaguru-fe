@@ -20,10 +20,12 @@ export interface Course {
 }
 
 export interface Modules {
+  submissionLink?: string | undefined;
   id: string;
   title: string;
+  assignmentId: string | undefined;
   hasAssignment: boolean;
-}
+}[]
 
 export interface CourseResponse {
   courseDetail: {
@@ -45,7 +47,7 @@ export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
     method: "GET",
   });
 
-  console.log("Course response", response.data);
+  console.log("Course response", response.data?.courseDetail.modules);
 
   if (!response.success) {
     return {

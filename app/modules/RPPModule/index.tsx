@@ -12,6 +12,7 @@ import { Textarea } from "~/components/ui/textarea";
 import type { RPPAction } from "./action";
 import { useEffect } from "react";
 import { toast } from "~/hooks/use-toast";
+import { getAsset } from "~/lib/getAsset";
 
 export const RPPModule = () => {
   const actionData = useActionData<typeof RPPAction>();
@@ -40,9 +41,12 @@ export const RPPModule = () => {
 
   return (
     <main className="flex flex-col mx-auto justify-center min-h-[90vh] gap-6 md:gap-9 w-fit px-10">
-      <h1 className="md:text-h3 text-h6 font-suez text-center">
-        Susun RPP Sesuai Kebutuhanmu Bersama
-      </h1>
+      <div className="flex max-md:flex-col gap-2">
+        <h1 className="md:text-h3 text-h6 font-suez text-center">
+          Susun RPP Sesuai Kebutuhanmu Bersama{" "}
+        </h1>
+        <img src={getAsset("/Gemini.webp")} alt="logo" className="w-22 object-contain" />
+      </div>
       <Form method="post" className="flex flex-col w-full">
         <Input
           id="title"

@@ -1,11 +1,12 @@
 import { ArrowLeft } from "lucide-react";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAsset } from "~/lib/getAsset";
 import type { CourseLoader } from "./loader";
 
 export default function CourseModule() {
   const { course } = useLoaderData<typeof CourseLoader>();
+  const navigate = useNavigate();
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col gap-6 md:gap-7 lg:gap-8 justify-start items-start">
@@ -82,10 +83,17 @@ export default function CourseModule() {
             <div className="flex flex-col lg:flex-row gap-3 max-lg:w-full">
               {module.hasAssignment && (
                 <>
-                  <Button variant="ghost" className="max-lg:w-full">
-                    Submit Ulang Tugas
-                  </Button>
-                  <Button variant="secondary" className="max-lg:w-full">
+                  <Link to={`/tugas/${module.assignmentId}`}>
+                    <Button variant="ghost" className="max-lg:w-full">
+                      Submit Tugas
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="secondary"
+                    onClick={() => navigate(`/evaluasi/${module.assignmentId}`)}
+                    disabled={!module.submissionLink}
+                    className="max-lg:w-full"
+                  >
                     Hasil Evaluasi Tugas
                   </Button>
                 </>
