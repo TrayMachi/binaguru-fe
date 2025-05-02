@@ -90,9 +90,11 @@ export default function CourseModule() {
                   </Button>
                 </>
               )}
-              <Button variant="primary" className="max-lg:w-full">
-                Lihat Modul
-              </Button>
+              <Link to={`/module/${module.id}`}>
+                <Button variant="primary" className="max-lg:w-full">
+                  Lihat Modul
+                </Button>
+              </Link>
             </div>
           </div>
         ))}

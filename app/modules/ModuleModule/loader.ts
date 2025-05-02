@@ -37,7 +37,7 @@ export async function ModuleLoader({ request, params }: LoaderFunctionArgs) {
     };
   }
 
-  console.log("Module response", response.data);
+  console.log("Module response", response);
 
   return {
     module: response.data,
