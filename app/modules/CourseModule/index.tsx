@@ -2,10 +2,10 @@ import { ArrowLeft } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { getAsset } from "~/lib/getAsset";
-import type { CourseResponse } from "./loader";
+import type { CourseLoader } from "./loader";
 
 export default function CourseModule() {
-  const data = useLoaderData() as CourseResponse;
+  const { course } = useLoaderData<typeof CourseLoader>();
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col gap-6 md:gap-7 lg:gap-8 justify-start items-start">
@@ -41,42 +41,42 @@ export default function CourseModule() {
             </Button>
           </Link>
           <Button variant="ghost" className="md:hidden hover:cursor-auto">
-            Progres: {data.course.progress}%
+            Progres: {course?.course?.progress}%
           </Button>
         </div>
 
         <div className="flex flex-row justify-between items-start gap-6 w-full">
           <div className="space-y-3">
             <div className="font-suez text-h5 md:text-h4 lg:text-h3">
-              {data.course.title}
+              {course?.course?.title}
             </div>
             <div className="flex flex-row gap-2 overflow-x-auto scrollbar-hide pb-2 thin-scrollbar">
               <div className="border-[1px] border-border rounded-full py-2 px-4 font-space text-b8">
-                {data.course.courseType}
+                {course?.course?.courseType}
               </div>
               <div className="border-[1px] border-border rounded-full py-2 px-4 font-space text-b8">
-                {data.course.level}
+                {course?.course?.level}
               </div>
               <div className="border-[1px] border-border rounded-full py-2 px-4 font-space text-b8 max-md:hidden">
-                Mata Pelajaran: {data.course.courseSubject}
+                Mata Pelajaran: {course?.course?.courseSubject}
               </div>
               <div className="border-[1px] border-border rounded-full py-2 px-4 font-space text-b8 max-md:hidden">
-                Bahasa: {data.course.language}
+                Bahasa: {course?.course?.language}
               </div>
             </div>
           </div>
           <Button variant="ghost" className="max-md:hidden hover:cursor-auto">
-            Progres: {data.course.progress}%
+            Progres: {course?.course?.progress}%
           </Button>
         </div>
 
         <div className="w-full font-space text-b8 md:text-b7">
-          {data.course.description}
+          {course?.course?.description}
         </div>
 
         <div className="font-suez text-tosca-500 text-h6 md:text-h5">Modul</div>
 
-        {data.modules?.map((module) => (
+        {course?.modules?.map((module) => (
           <div className="w-full flex flex-col lg:flex-row justify-between items-center gap-3 bg-white dark:bg-[#2A2A2A] px-7 py-5 rounded-[16px] shadow-sm hover:shadow-md transition-shadow">
             <div className="font-space text-s8 md:text-s7">{module.title}</div>
             <div className="flex flex-col lg:flex-row gap-3 max-lg:w-full">

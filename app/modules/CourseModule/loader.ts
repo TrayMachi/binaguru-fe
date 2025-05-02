@@ -26,8 +26,10 @@ export interface Modules {
 }
 
 export interface CourseResponse {
-  course: Course;
-  modules: Modules[];
+  courseDetail: {
+    course: Course;
+    modules: Modules[];
+  };
 }
 
 export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
@@ -43,6 +45,8 @@ export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
     method: "GET",
   });
 
+  console.log("Course response", response.data);
+
   if (!response.success) {
     return {
       message: response.message || "Failed to load course",
@@ -51,5 +55,7 @@ export async function CourseLoader({ request, params }: LoaderFunctionArgs) {
     };
   }
 
-  return response.data;
+  return {
+    course: response.data?.courseDetail,
+  };
 }
