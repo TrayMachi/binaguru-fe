@@ -24,9 +24,9 @@ export async function TugasLoader({ request, params }: LoaderFunctionArgs) {
   });
 
 
-  // if (response.code === 404) {
-  //   return redirect("/");
-  // }
+  if (response.code === 404) {
+    return redirect("/");
+  }
 
   if (!response.success) {
     return {
