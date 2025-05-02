@@ -12,7 +12,12 @@ import {
   DrawerTrigger,
 } from "~/components/ui/drawer";
 import { useLoaderData, useNavigate } from "react-router";
-import type { CourseBase, CourseResponse, MyCourse, RecommendedCourse } from "./loader";
+import type {
+  CourseBase,
+  CourseResponse,
+  MyCourse,
+  RecommendedCourse,
+} from "./loader";
 import {
   Select,
   SelectContent,
@@ -25,26 +30,138 @@ import { useState } from "react";
 export default function SearchModule() {
   const navigate = useNavigate();
   const data = useLoaderData() as CourseResponse;
-
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Generic filter function that preserves the array type
-  const filterCoursesByTitle = <T extends CourseBase>(courses: T[]): T[] => {
-    if (!searchQuery.trim()) return courses;
+  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedCons, setSelectedCons] = useState<string[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
-    return courses.filter((course) =>
-      course.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const getUniqueValues = <T extends CourseBase>(
+    courses: T[],
+    property: keyof CourseBase
+  ): string[] => {
+    const uniqueSet = new Set<string>();
+    courses.forEach((course) => {
+      if (course[property]) {
+        uniqueSet.add(course[property] as string);
+      }
+    });
+    return Array.from(uniqueSet);
   };
 
-  // Now apply filter with the correct typing
-  const filteredCourseku = filterCoursesByTitle<MyCourse>(data.courseku || []);
-  const filteredRekomendasi = filterCoursesByTitle<RecommendedCourse>(
+  const getUniqueConstraints = (): string[] => {
+    const uniqueSet = new Set<string>();
+
+    data.courseku?.forEach((course) => {
+      course.ownerCons?.forEach((cons) => uniqueSet.add(cons));
+    });
+
+    data.rekomendasi?.forEach((course) => {
+      course.user?.cons?.forEach((cons) => uniqueSet.add(cons));
+    });
+
+    data.allcourse?.forEach((course) => {
+      course.user?.cons?.forEach((cons) => uniqueSet.add(cons));
+    });
+
+    return Array.from(uniqueSet);
+  };
+
+  const availableLevels = getUniqueValues(
+    [
+      ...(data.courseku || []),
+      ...(data.rekomendasi || []),
+      ...(data.allcourse || []),
+    ],
+    "level"
+  );
+  const availableTypes = getUniqueValues(
+    [
+      ...(data.courseku || []),
+      ...(data.rekomendasi || []),
+      ...(data.allcourse || []),
+    ],
+    "courseType"
+  );
+  const availableConstraints = getUniqueConstraints();
+  const availableLanguages = getUniqueValues(
+    [
+      ...(data.courseku || []),
+      ...(data.rekomendasi || []),
+      ...(data.allcourse || []),
+    ],
+    "language"
+  );
+  const availableSubjects = getUniqueValues(
+    [
+      ...(data.courseku || []),
+      ...(data.rekomendasi || []),
+      ...(data.allcourse || []),
+    ],
+    "courseSubject"
+  );
+
+  const filterCourses = <T extends CourseBase>(courses: T[]): T[] => {
+    return courses.filter((course) => {
+      const matchesSearch =
+        !searchQuery.trim() ||
+        course.title.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesLevel =
+        selectedLevels.length === 0 || selectedLevels.includes(course.level);
+
+      const matchesType =
+        selectedTypes.length === 0 || selectedTypes.includes(course.courseType);
+
+      const matchesLanguage =
+        selectedLanguages.length === 0 ||
+        selectedLanguages.includes(course.language);
+
+      const matchesSubject =
+        selectedSubjects.length === 0 ||
+        selectedSubjects.includes(course.courseSubject);
+
+      const matchesConstraint =
+        selectedCons.length === 0 ||
+        (course as any).ownerCons?.some((cons: string) =>
+          selectedCons.includes(cons)
+        ) ||
+        (course as any).user?.cons?.some((cons: string) =>
+          selectedCons.includes(cons)
+        );
+
+      return (
+        matchesSearch &&
+        matchesLevel &&
+        matchesType &&
+        matchesLanguage &&
+        matchesSubject &&
+        matchesConstraint
+      );
+    });
+  };
+
+  const filteredCourseku = filterCourses<MyCourse>(data.courseku || []);
+  const filteredRekomendasi = filterCourses<RecommendedCourse>(
     data.rekomendasi || []
   );
-  const filteredAllcourse = filterCoursesByTitle<RecommendedCourse>(
+  const filteredAllcourse = filterCourses<RecommendedCourse>(
     data.allcourse || []
   );
+
+  const toggleFilter = (
+    value: string,
+    selectedValues: string[],
+    setSelectedValues: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    if (selectedValues.includes(value)) {
+      setSelectedValues(selectedValues.filter((v) => v !== value));
+    } else {
+      setSelectedValues([...selectedValues, value]);
+    }
+  };
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col justify-start items-start text-black pb-10 max-md:-mt-10">
@@ -107,45 +224,35 @@ export default function SearchModule() {
                             Jenjang Pendidikan
                           </div>
                           <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sd" />
-                              <label
-                                htmlFor="sd"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            {availableLevels.map((level) => (
+                              <div
+                                key={level}
+                                className="flex items-center space-x-2"
                               >
-                                SD
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="smp" />
-                              <label
-                                htmlFor="smp"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                SMP
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sma" />
-                              <label
-                                htmlFor="sma"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                SMA
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Kuliah
-                              </label>
-                            </div>
+                                <Checkbox
+                                  id={`level-${level}`}
+                                  checked={selectedLevels.includes(level)}
+                                  onCheckedChange={() =>
+                                    toggleFilter(
+                                      level,
+                                      selectedLevels,
+                                      setSelectedLevels
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor={`level-${level}`}
+                                  className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {level}
+                                </label>
+                              </div>
+                            ))}
+                            {availableLevels.length === 0 && (
+                              <div className="text-s8 text-gray-500">
+                                Tidak ada pilihan
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="space-y-3">
@@ -153,65 +260,35 @@ export default function SearchModule() {
                             Tipe Pelatihan
                           </div>
                           <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sd" />
-                              <label
-                                htmlFor="sd"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            {availableTypes.map((type) => (
+                              <div
+                                key={type}
+                                className="flex items-center space-x-2"
                               >
-                                Pengelolaan Kelas
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="smp" />
-                              <label
-                                htmlFor="smp"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Pembelajaran Daring
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sma" />
-                              <label
-                                htmlFor="sma"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Teknologi dalam Pendidikan
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Inovasi Pembelajaran
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Kurikulum dan Rencana Pembelajaran
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Teknik Evaluasi Pembelajaran
-                              </label>
-                            </div>
+                                <Checkbox
+                                  id={`type-${type}`}
+                                  checked={selectedTypes.includes(type)}
+                                  onCheckedChange={() =>
+                                    toggleFilter(
+                                      type,
+                                      selectedTypes,
+                                      setSelectedTypes
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor={`type-${type}`}
+                                  className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {type}
+                                </label>
+                              </div>
+                            ))}
+                            {availableTypes.length === 0 && (
+                              <div className="text-s8 text-gray-500">
+                                Tidak ada pilihan
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="space-y-3">
@@ -219,65 +296,35 @@ export default function SearchModule() {
                             Kendala
                           </div>
                           <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sd" />
-                              <label
-                                htmlFor="sd"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            {availableConstraints.map((constraint) => (
+                              <div
+                                key={constraint}
+                                className="flex items-center space-x-2"
                               >
-                                Akses ke Materi
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="smp" />
-                              <label
-                                htmlFor="smp"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Teknologi & Infrastruktur
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sma" />
-                              <label
-                                htmlFor="sma"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Pembelajaran Jarak Jauh
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Pengelolaan Kelas
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Metode Pengajaran
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Kendala Mental & Motivasi
-                              </label>
-                            </div>
+                                <Checkbox
+                                  id={`constraint-${constraint}`}
+                                  checked={selectedCons.includes(constraint)}
+                                  onCheckedChange={() =>
+                                    toggleFilter(
+                                      constraint,
+                                      selectedCons,
+                                      setSelectedCons
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor={`constraint-${constraint}`}
+                                  className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {constraint}
+                                </label>
+                              </div>
+                            ))}
+                            {availableConstraints.length === 0 && (
+                              <div className="text-s8 text-gray-500">
+                                Tidak ada pilihan
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="space-y-3">
@@ -285,35 +332,35 @@ export default function SearchModule() {
                             Bahasa
                           </div>
                           <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sd" />
-                              <label
-                                htmlFor="sd"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            {availableLanguages.map((language) => (
+                              <div
+                                key={language}
+                                className="flex items-center space-x-2"
                               >
-                                Indonesia
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="smp" />
-                              <label
-                                htmlFor="smp"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Inggris
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sma" />
-                              <label
-                                htmlFor="sma"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Daerah
-                              </label>
-                            </div>
+                                <Checkbox
+                                  id={`language-${language}`}
+                                  checked={selectedLanguages.includes(language)}
+                                  onCheckedChange={() =>
+                                    toggleFilter(
+                                      language,
+                                      selectedLanguages,
+                                      setSelectedLanguages
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor={`language-${language}`}
+                                  className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {language}
+                                </label>
+                              </div>
+                            ))}
+                            {availableLanguages.length === 0 && (
+                              <div className="text-s8 text-gray-500">
+                                Tidak ada pilihan
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="space-y-3">
@@ -321,45 +368,35 @@ export default function SearchModule() {
                             Mata Pelajaran
                           </div>
                           <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sd" />
-                              <label
-                                htmlFor="sd"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            {availableSubjects.map((subject) => (
+                              <div
+                                key={subject}
+                                className="flex items-center space-x-2"
                               >
-                                Matematika
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="smp" />
-                              <label
-                                htmlFor="smp"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                IPA
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="sma" />
-                              <label
-                                htmlFor="sma"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Biologi
-                              </label>
-                            </div>
-
-                            <div className="flex items-center space-x-2">
-                              <Checkbox id="pt" />
-                              <label
-                                htmlFor="pt"
-                                className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Fisika
-                              </label>
-                            </div>
+                                <Checkbox
+                                  id={`subject-${subject}`}
+                                  checked={selectedSubjects.includes(subject)}
+                                  onCheckedChange={() =>
+                                    toggleFilter(
+                                      subject,
+                                      selectedSubjects,
+                                      setSelectedSubjects
+                                    )
+                                  }
+                                />
+                                <label
+                                  htmlFor={`subject-${subject}`}
+                                  className="text-s8 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {subject}
+                                </label>
+                              </div>
+                            ))}
+                            {availableSubjects.length === 0 && (
+                              <div className="text-s8 text-gray-500">
+                                Tidak ada pilihan
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -401,45 +438,26 @@ export default function SearchModule() {
                 Jenjang Pendidikan
               </div>
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sd" />
-                  <label
-                    htmlFor="sd"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    SD
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="smp" />
-                  <label
-                    htmlFor="smp"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    SMP
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sma" />
-                  <label
-                    htmlFor="sma"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    SMA
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Kuliah
-                  </label>
-                </div>
+                {availableLevels.map((level) => (
+                  <div key={level} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`level-${level}`}
+                      checked={selectedLevels.includes(level)}
+                      onCheckedChange={() =>
+                        toggleFilter(level, selectedLevels, setSelectedLevels)
+                      }
+                    />
+                    <label
+                      htmlFor={`level-${level}`}
+                      className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {level}
+                    </label>
+                  </div>
+                ))}
+                {availableLevels.length === 0 && (
+                  <div className="text-s7 text-gray-500">Tidak ada pilihan</div>
+                )}
               </div>
             </div>
             <div className="space-y-3">
@@ -447,165 +465,80 @@ export default function SearchModule() {
                 Tipe Pelatihan
               </div>
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sd" />
-                  <label
-                    htmlFor="sd"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pengelolaan Kelas
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="smp" />
-                  <label
-                    htmlFor="smp"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pembelajaran Daring
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sma" />
-                  <label
-                    htmlFor="sma"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Teknologi dalam Pendidikan
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Inovasi Pembelajaran
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Kurikulum dan Rencana Pembelajaran
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Teknik Evaluasi Pembelajaran
-                  </label>
-                </div>
+                {availableTypes.map((type) => (
+                  <div key={type} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`type-${type}`}
+                      checked={selectedTypes.includes(type)}
+                      onCheckedChange={() =>
+                        toggleFilter(type, selectedTypes, setSelectedTypes)
+                      }
+                    />
+                    <label
+                      htmlFor={`type-${type}`}
+                      className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {type}
+                    </label>
+                  </div>
+                ))}
+                {availableTypes.length === 0 && (
+                  <div className="text-s7 text-gray-500">Tidak ada pilihan</div>
+                )}
               </div>
             </div>
             <div className="space-y-3">
               <div className="font-space text-s7 text-[#A7A7A7]">Kendala</div>
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sd" />
-                  <label
-                    htmlFor="sd"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Akses ke Materi
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="smp" />
-                  <label
-                    htmlFor="smp"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Teknologi & Infrastruktur
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sma" />
-                  <label
-                    htmlFor="sma"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pembelajaran Jarak Jauh
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Pengelolaan Kelas
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Metode Pengajaran
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Kendala Mental & Motivasi
-                  </label>
-                </div>
+                {availableConstraints.map((constraint) => (
+                  <div key={constraint} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`constraint-${constraint}`}
+                      checked={selectedCons.includes(constraint)}
+                      onCheckedChange={() =>
+                        toggleFilter(constraint, selectedCons, setSelectedCons)
+                      }
+                    />
+                    <label
+                      htmlFor={`constraint-${constraint}`}
+                      className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {constraint}
+                    </label>
+                  </div>
+                ))}
+                {availableConstraints.length === 0 && (
+                  <div className="text-s7 text-gray-500">Tidak ada pilihan</div>
+                )}
               </div>
             </div>
             <div className="space-y-3">
-              <div className="font-space text-s7 text-[#A7A7A7]">
-                Jenjang Pendidikan
-              </div>
+              <div className="font-space text-s7 text-[#A7A7A7]">Bahasa</div>
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sd" />
-                  <label
-                    htmlFor="sd"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Indonesia
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="smp" />
-                  <label
-                    htmlFor="smp"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Inggris
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sma" />
-                  <label
-                    htmlFor="sma"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Daerah
-                  </label>
-                </div>
+                {availableLanguages.map((language) => (
+                  <div key={language} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`language-${language}`}
+                      checked={selectedLanguages.includes(language)}
+                      onCheckedChange={() =>
+                        toggleFilter(
+                          language,
+                          selectedLanguages,
+                          setSelectedLanguages
+                        )
+                      }
+                    />
+                    <label
+                      htmlFor={`language-${language}`}
+                      className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {language}
+                    </label>
+                  </div>
+                ))}
+                {availableLanguages.length === 0 && (
+                  <div className="text-s7 text-gray-500">Tidak ada pilihan</div>
+                )}
               </div>
             </div>
             <div className="space-y-3">
@@ -613,45 +546,30 @@ export default function SearchModule() {
                 Mata Pelajaran
               </div>
               <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sd" />
-                  <label
-                    htmlFor="sd"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Matematika
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="smp" />
-                  <label
-                    htmlFor="smp"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    IPA
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="sma" />
-                  <label
-                    htmlFor="sma"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Biologi
-                  </label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="pt" />
-                  <label
-                    htmlFor="pt"
-                    className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Fisika
-                  </label>
-                </div>
+                {availableSubjects.map((subject) => (
+                  <div key={subject} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`subject-${subject}`}
+                      checked={selectedSubjects.includes(subject)}
+                      onCheckedChange={() =>
+                        toggleFilter(
+                          subject,
+                          selectedSubjects,
+                          setSelectedSubjects
+                        )
+                      }
+                    />
+                    <label
+                      htmlFor={`subject-${subject}`}
+                      className="text-s7 font-space peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      {subject}
+                    </label>
+                  </div>
+                ))}
+                {availableSubjects.length === 0 && (
+                  <div className="text-s7 text-gray-500">Tidak ada pilihan</div>
+                )}
               </div>
             </div>
           </div>
