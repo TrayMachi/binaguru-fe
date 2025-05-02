@@ -30,6 +30,11 @@ export default function EvaluasiModule() {
         <div className="font-space text-b8 md:text-b7 w-full">
           {evaluasi?.contentMarkdown}
         </div>
+        <div className="font-space text-b8">
+          Dengan menyelesaikan tugas ini, Gemini AI akan membantu mengevaluasi
+          hasil kerja Anda dan memberikan umpan balik untuk pengembangan lebih
+          lanjut.
+        </div>
       </div>
 
       <div className="w-full flex flex-row justify-end items-center">
@@ -38,9 +43,9 @@ export default function EvaluasiModule() {
             Revisi Tugas
           </Button>
         </Link>
-        <Button>
-          Selesaikan Modul
-        </Button>
+        <Link to="/course">
+          <Button>Selesaikan Modul</Button>
+        </Link>
       </div>
     </div>
   );
