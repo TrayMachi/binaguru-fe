@@ -5,7 +5,7 @@ import { ArrowLeft, FileText } from "lucide-react";
 import { marked } from "marked";
 import { Input } from "~/components/ui/input";
 
-export default function ModuleModule() {
+export default function TugasModule() {
   const { assignment } = useLoaderData<typeof TugasLoader>();
 
   const navigate = useNavigate();
