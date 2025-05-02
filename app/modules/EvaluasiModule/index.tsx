@@ -31,6 +31,17 @@ export default function EvaluasiModule() {
           {evaluasi?.contentMarkdown}
         </div>
       </div>
+
+      <div className="w-full flex flex-row justify-end items-center">
+        <Link to={`/tugas/${assignment?.id}`}>
+          <Button variant="secondary" className="w-fit">
+            Revisi Tugas
+          </Button>
+        </Link>
+        <Button>
+          Selesaikan Modul
+        </Button>
+      </div>
     </div>
   );
 }
