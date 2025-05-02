@@ -12,7 +12,7 @@ import {
   DrawerTrigger,
 } from "~/components/ui/drawer";
 import { useLoaderData, useNavigate } from "react-router";
-import type { CourseResponse } from "./loader";
+import type { CourseBase, CourseResponse, MyCourse, RecommendedCourse } from "./loader";
 import {
   Select,
   SelectContent,
@@ -20,10 +20,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { useState } from "react";
 
 export default function SearchModule() {
   const navigate = useNavigate();
   const data = useLoaderData() as CourseResponse;
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Generic filter function that preserves the array type
+  const filterCoursesByTitle = <T extends CourseBase>(courses: T[]): T[] => {
+    if (!searchQuery.trim()) return courses;
+
+    return courses.filter((course) =>
+      course.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  // Now apply filter with the correct typing
+  const filteredCourseku = filterCoursesByTitle<MyCourse>(data.courseku || []);
+  const filteredRekomendasi = filterCoursesByTitle<RecommendedCourse>(
+    data.rekomendasi || []
+  );
+  const filteredAllcourse = filterCoursesByTitle<RecommendedCourse>(
+    data.allcourse || []
+  );
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col justify-start items-start text-black pb-10 max-md:-mt-10">
@@ -57,6 +78,8 @@ export default function SearchModule() {
                   placeholder="Type here"
                   rightIcon={<Search />}
                   className="!h-10 md:!h-14 w-full col-span-8"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
               <div className="col-span-4">
@@ -635,58 +658,77 @@ export default function SearchModule() {
         </div>
 
         <div className="w-full py-8 px-5 md:py-10 md:px-12 lg:py-[60px] lg:px-20 flex flex-col gap-8 md:gap-11 lg:gap-[60px]">
-          <div className="space-y-4 md:space-y-5">
-            <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
-              Courseku
+          {filteredCourseku.length === 0 &&
+            filteredRekomendasi.length === 0 &&
+            filteredAllcourse.length === 0 &&
+            searchQuery.trim() !== "" && (
+              <div className="text-center w-full py-10">
+                <div className="font-space text-s6 md:text-s5 lg:text-s4 text-gray-500">
+                  Tidak ada hasil untuk "{searchQuery}"
+                </div>
+              </div>
+            )}
+
+          {filteredCourseku.length > 0 && (
+            <div className="space-y-4 md:space-y-5">
+              <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
+                Courseku
+              </div>
+              <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+                {filteredCourseku.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    id={course.id}
+                    title={course.title}
+                    description={course.description}
+                    level={course.level}
+                    pros={course.courseType}
+                    progress={course.progress}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {data.courseku.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  id={course.id}
-                  title={course.title}
-                  description={course.description}
-                  level={course.level}
-                  pros={course.courseType}
-                  progress={course.progress}
-                />
-              ))}
+          )}
+
+          {filteredRekomendasi.length > 0 && (
+            <div className="space-y-4 md:space-y-5">
+              <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
+                Rekomendasi
+              </div>
+              <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+                {filteredRekomendasi.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    id={course.id}
+                    title={course.title}
+                    description={course.description}
+                    level={course.level}
+                    pros={course.courseType}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-4 md:space-y-5">
-            <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
-              Rekomendasi
+          )}
+
+          {filteredAllcourse.length > 0 && (
+            <div className="space-y-4 md:space-y-5">
+              <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
+                Semua Course
+              </div>
+              <div className="max-md:gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                {filteredAllcourse.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    id={course.id}
+                    title={course.title}
+                    description={course.description}
+                    level={course.level}
+                    pros={course.courseType}
+                  />
+                ))}
+              </div>
             </div>
-            <div className="max-md:flex max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:pb-2 max-md:gap-4 md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {data.rekomendasi.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  id={course.id}
-                  title={course.title}
-                  description={course.description}
-                  level={course.level}
-                  pros={course.courseType}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="space-y-4 md:space-y-5">
-            <div className="font-space text-s6 md:text-s5 lg:text-s4 text-tosca-500">
-              Semua Course
-            </div>
-            <div className="max-md:gap-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-              {data.allcourse.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  id={course.id}
-                  title={course.title}
-                  description={course.description}
-                  level={course.level}
-                  pros={course.courseType}
-                />
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
