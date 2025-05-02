@@ -24,7 +24,7 @@ export const CreateCourseModule = () => {
         title: "Coure Berhasil Dibuat",
         variant: "success",
       });
-      navigate(`/coursse/${actionData?.id}`);
+      navigate(`/course/${actionData?.id}`);
     } else if (
       actionData &&
       !actionData.success &&
