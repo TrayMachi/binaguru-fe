@@ -7,7 +7,20 @@ export interface Assignment {
   moduleId: string;
   title: string;
   description: string;
-  submissionLink: string;
+  createdAt: Date;
+  updatedAt: Date;
+  module: {
+    id: string;
+    title: string;
+    courseId: string;
+  };
+  userSubmission?: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    contentLink: string;
+    attempts: number;
+  };
 }
 
 export async function TugasLoader({ request, params }: LoaderFunctionArgs) {
@@ -23,20 +36,12 @@ export async function TugasLoader({ request, params }: LoaderFunctionArgs) {
     method: "GET",
   });
 
-
-  // if (response.code === 404) {
-  //   return redirect("/");
-  // }
-
   if (!response.success) {
     return {
       message: response.message || "Failed to load assignment",
       success: false,
-      courseku: { modules: [] },
     };
   }
-
-  console.log("Assignment response", response);
 
   return {
     assignment: response.data,
