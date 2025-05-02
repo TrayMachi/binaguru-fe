@@ -2,9 +2,14 @@ import { Link, useLoaderData } from "react-router";
 import type { ModuleLoader } from "./loader";
 import { Button } from "~/components/ui/button";
 import { ArrowLeft, FileText } from "lucide-react";
+import { marked } from "marked";
 
 export default function ModuleModule() {
   const { module } = useLoaderData<typeof ModuleLoader>();
+
+  function stripMarkdownCodeBlock(md: string) {
+    return md.replace(/^```markdown/, "").replace(/```$/, "");
+  }
 
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col gap-4 justify-start items-start text-black py-10 md:py-14 lg:py-20">
@@ -31,10 +36,14 @@ export default function ModuleModule() {
             </Button>
           )}
         </div>
-
-        <div className="w-full bg-white dark:bg-black rounded-[12px] shadow-md p-4 md:py-5 md:px-7 font-space text-b8 md:text-b7 lg-text-b6">
-          {module?.contentMarkdown}
-        </div>
+        <div
+          className="prose lg:prose-lg prose-zinc dark:prose-invert prose-headings:text-tosca-500 prose-headings:font-semibold prose-headings:mt-0 prose-headings:mb-2 prose-headings:leading-tight w-full max-w-full"
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(
+              stripMarkdownCodeBlock(module?.contentMarkdown ?? "")
+            ),
+          }}
+        ></div>
 
         <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-5 bg-yellow-500 dark:bg-yellow-700 text-white dark:text-white rounded-[24px] md:rounded-[32px] py-5 px-6 md:py-10 md:px-13">
           <div className="font-space text-s8 md:text-s7 lg:text-s6 font-bold">
