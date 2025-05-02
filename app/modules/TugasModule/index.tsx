@@ -34,17 +34,20 @@ export default function ModuleModule() {
           {assignment?.description}
         </div>
 
-        <div className="flex flex-col gap-5 md:gap-6 bg-white dark:bg-[#2A2A2A] rounded-[24px] shadow-md w-full">
-          <Input
-            required
-            id="submissionLink"
-            name="submissionLink"
-            autoComplete="submissionLink"
-            label="Link Video Tugas"
-            placeholder="Ketik link video tugas yang Anda upload di Youtube..."
-            layout="col-span-2"
-          />
-          <Button className="w-full">Kirim Tugas</Button>
+        <div className="flex flex-col gap-5 md:gap-6 bg-white dark:bg-[#2A2A2A] rounded-[24px] shadow-md w-full py-5 md:py-6">
+          <div className="px-5">
+            <Input
+              required
+              id="submissionLink"
+              name="submissionLink"
+              autoComplete="submissionLink"
+              label="Link Video Tugas"
+              placeholder="Ketik link video tugas yang Anda upload di Youtube..."
+              layout="col-span-2"
+              className=""
+            />
+            <Button className="w-full">Kirim Tugas</Button>
+          </div>
         </div>
       </div>
     </div>
