@@ -27,7 +27,7 @@ function Textarea({
       <textarea
         data-slot="textarea"
         className={cn(
-          "disabled:opacity-40 px-4 py-3 flex h-12 w-full rounded-[8px] border-[1px] font-space bg-white dark:bg-[#2A2A2A] text-b8 file:border-0 file:bg-transparent file:text-b8 file:font-medium placeholder:text-gray-500 focus-visible:outline-none disabled:cursor-not-allowed  hover:placeholder:text-black/100 transition-all duration-500",
+          "disabled:opacity-40 my-2 px-4 py-3 flex h-12 w-full rounded-[8px] border-[1px] font-space bg-white dark:bg-[#2A2A2A] text-b8 file:border-0 file:bg-transparent file:text-b8 file:font-medium placeholder:text-gray-500 focus-visible:outline-none disabled:cursor-not-allowed  hover:placeholder:text-black/100 transition-all duration-500",
           className,
           error
             ? "border-error"

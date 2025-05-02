@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Check, ChevronDown } from "lucide-react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "~/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -8,60 +12,26 @@ import {
   CommandItem,
   CommandList,
 } from "~/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
-import { cn } from "~/lib/utils";
+import { ChevronDown, Check } from "lucide-react";
 import { Input } from "~/components/ui/input";
+import { cn } from "~/lib/utils";
 
-export const levels = [
-  "TK_A",
-  "TK_B",
-  "SD_Kelas_1",
-  "SD_Kelas_2",
-  "SD_Kelas_3",
-  "SD_Kelas_4",
-  "SD_Kelas_5",
-  "SD_Kelas_6",
-  "SMP_Kelas_7",
-  "SMP_Kelas_8",
-  "SMP_Kelas_9",
-  "SMA_Kelas_10",
-  "SMA_Kelas_11",
-  "SMA_Kelas_12",
-  "SMK_Kelas_10",
-  "SMK_Kelas_11",
-  "SMK_Kelas_12",
-  "D3_Semester_1",
-  "D3_Semester_2",
-  "D3_Semester_3",
-  "D3_Semester_4",
-  "D3_Semester_5",
-  "D3_Semester_6",
-  "S1_Semester_1",
-  "S1_Semester_2",
-  "S1_Semester_3",
-  "S1_Semester_4",
-  "S1_Semester_5",
-  "S1_Semester_6",
-  "S1_Semester_7",
-  "S1_Semester_8",
-  "S2_Semester_1",
-  "S2_Semester_2",
-  "S2_Semester_3",
-  "S2_Semester_4",
-  "Umum",
+export const courseType = [
+  "Pengelolaan Kelas",
+  "Pembelajaran Daring",
+  "Teknologi dalam Pendidikan",
+  "Inovasi Pembelajaran",
+  "Kurikulum dan Rencana Pembelajaran",
+  "Teknik Evelausasi Pembelajaran",
 ];
 
-export const LevelCombobox = ({
-  data = levels,
+export const TypeCombobox = ({
+  data = courseType,
   error,
   value,
   setValue,
 }: {
-  data?: typeof levels;
+  data?: typeof courseType;
   error?: string;
   value: string;
   setValue: (value: string) => void;
@@ -72,16 +42,16 @@ export const LevelCombobox = ({
       <PopoverTrigger asChild>
         <Input
           required
-          id="level"
-          name="level"
-          autoComplete="level"
-          label="Jenjang yang Diajarkan"
+          id="courseType"
+          name="courseType"
+          autoComplete="courseType"
+          label="Tipe Pelatihan"
           className="text-start"
-          placeholder="Pilih sesuai dengan jenjang yang Anda ajarkan."
+          placeholder="Pilih sesuai tipe pelatihan yang Anda inginkan."
           value={
             value
               ? data.find((item) => item === value)
-              : "Pilih sesuai dengan jenjang yang Anda ajarkan."
+              : "Pilih sesuai tipe pelatihan yang Anda inginkan."
           }
           error={error}
           rightIcon={
@@ -93,7 +63,7 @@ export const LevelCombobox = ({
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Cari jenjang..." />
+          <CommandInput placeholder="Cari Tipe Pelatihan..." />
           <CommandList>
             <CommandEmpty>Tidak ada Sub Kategori.</CommandEmpty>
             <CommandGroup>
@@ -106,7 +76,7 @@ export const LevelCombobox = ({
                     setOpen(false);
                   }}
                 >
-                  {item.replace(/_/g, " ")}
+                  {item}
                   <Check
                     className={cn(
                       "ml-auto",

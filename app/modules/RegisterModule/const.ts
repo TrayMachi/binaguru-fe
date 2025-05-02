@@ -12,6 +12,6 @@ export const pros = [
     'Pembelajaran Daring',
     'Teknologi dalam Pendidikan',
     'Inovasi Pembelajaran',
-    'Kurikulu dan Rencana Pembelajaran',
+    'Kurikulum dan Rencana Pembelajaran',
     'Teknik Evelausasi Pembelajaran'
 ]
