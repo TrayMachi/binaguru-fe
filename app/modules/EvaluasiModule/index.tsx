@@ -10,6 +10,10 @@ export default function EvaluasiModule() {
 
   const navigate = useNavigate();
 
+  function stripMarkdownCodeBlock(md: string) {
+    return md.replace(/^```markdown/, "").replace(/```$/, "");
+  }
+
   return (
     <div className="relative overflow-clip h-fit grow w-screen flex flex-col gap-6 md:gap-7 lg:gap-8 justify-start items-start text-black py-8 px-5 md:p-14 lg:p-20">
       <Button onClick={() => navigate(-1)} variant="ghost" className="w-fit">
@@ -27,9 +31,14 @@ export default function EvaluasiModule() {
       <div className="w-full h-[1pt] bg-border" />
 
       <div className="w-full flex flex-col lg:flex-row gap-6 md:gap-7 text-black dark:text-white justify-start items-start">
-        <div className="font-space text-b8 md:text-b7 w-full">
-          {evaluasi?.contentMarkdown}
-        </div>
+        <div
+          className="prose lg:prose-lg prose-zinc dark:prose-invert prose-headings:text-tosca-500 prose-headings:font-semibold prose-headings:mt-0 prose-headings:mb-2 prose-headings:leading-tight w-full max-w-full"
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(
+              stripMarkdownCodeBlock(evaluasi?.contentMarkdown ?? "")
+            ),
+          }}
+        ></div>
         <div className="font-space text-b8">
           Dengan menyelesaikan tugas ini, Gemini AI akan membantu mengevaluasi
           hasil kerja Anda dan memberikan umpan balik untuk pengembangan lebih
