@@ -2,6 +2,20 @@ import type { ActionFunctionArgs } from "react-router";
 import { z } from "zod";
 import { fetcher } from "~/lib/fetch.server";
 
+export interface CourseData {
+  id: string;
+  level: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  title: string;
+  description: string;
+  language: string;
+  courseType: string;
+  courseSubject: string;
+  moduleCount: number;
+}
+
 export async function CreateCourseAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const title = formData.get("title") as string;
@@ -30,13 +44,22 @@ export async function CreateCourseAction({ request }: ActionFunctionArgs) {
       courseSubject,
     });
 
-    console.log("Parsed Data", parsedData);
+    const response = await fetcher<CourseData>("courses", request, {
+      method: "POST",
+      body: JSON.stringify(parsedData),
+    });
 
+    if (!response.success) {
+      return {
+        message: response.error || "Gagal membuat RPP",
+        success: false,
+      };
+    }
 
     return {
-      message: "RPP Berhasil Dibuat",
+      message: "Course Berhasil Dibuat",
       success: true,
-      //id: response?.data?.id,
+      id: response?.data?.id,
     };
   } catch (error) {
     if (error instanceof z.ZodError) {

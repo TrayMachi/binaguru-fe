@@ -1,11 +1,6 @@
 import { ArrowLeft, BookMarked } from "lucide-react";
 import { useEffect, useState } from "react";
-import {
-  useActionData,
-  useNavigation,
-  useNavigate,
-  Form,
-} from "react-router";
+import { useActionData, useNavigation, useNavigate, Form } from "react-router";
 import { toast } from "~/hooks/use-toast";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -25,10 +20,10 @@ export const CreateCourseModule = () => {
   useEffect(() => {
     if (actionData?.success) {
       toast({
-        title: "RPP Berhasil Dibuat",
+        title: "Coure Berhasil Dibuat",
         variant: "success",
       });
-      //navigate("/rpp/collection");
+      navigate(`/coursse/${actionData?.id}`);
     } else if (
       actionData &&
       !actionData.success &&
@@ -117,7 +112,12 @@ export const CreateCourseModule = () => {
                 : undefined
             }
           />
-          <input type="hidden" name="courseType" className="hidden" value={type} />
+          <input
+            type="hidden"
+            name="courseType"
+            className="hidden"
+            value={type}
+          />
           <TypeCombobox
             value={type}
             setValue={setType}
