@@ -8,6 +8,7 @@ import { Textarea } from "~/components/ui/textarea";
 import type { CreateCourseAction } from "./action";
 import { LevelCombobox } from "~/components/elements/LevelCombobox";
 import { TypeCombobox } from "./elements/TypeCombobox";
+import { getAsset } from "~/lib/getAsset";
 
 export const CreateCourseModule = () => {
   const actionData = useActionData<typeof CreateCourseAction>();
@@ -45,8 +46,8 @@ export const CreateCourseModule = () => {
       >
         <ArrowLeft /> Back
       </Button>
-      <h1 className="md:text-h3 text-h6 font-suez">
-        Personalisasi Coursemu Bersama
+      <h1 className="md:text-h3 text-h6 font-suez flex max-md:flex-col max-md:items-center max-md:text-center gap-2">
+        Personalisasi Coursemu Bersama <img src={getAsset("/Gemini.webp")} alt="logo" className="w-22 object-contain" />
       </h1>
       <Form method="post" className="flex flex-col w-full gap-5 md:gap-6">
         <Input
