@@ -128,18 +128,6 @@ export default function LandingModule() {
                     </div>
 
                     <div className="relative">
-                        <div className="relative z-10">
-                            <img
-                                src={getAsset("/herolanding.webp")}
-                                alt="BinaGuru Platform"
-                                className="w-full h-auto rounded-2xl shadow-2xl dark:hidden"
-                            />
-                            <img
-                                src={getAsset("/herolandingdark.webp")}
-                                alt="BinaGuru Platform"
-                                className="w-full h-auto rounded-2xl shadow-2xl hidden dark:block"
-                            />
-                        </div>
                         <div className="absolute -top-4 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
                         <div className="absolute -bottom-8 -left-4 w-72 h-72 bg-tosca-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
                     </div>
