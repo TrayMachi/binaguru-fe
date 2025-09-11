@@ -79,7 +79,7 @@ export default function LandingModule() {
                     <div className="w-full h-full bg-gradient-to-br from-tosca-100/20 to-yellow-100/20 dark:from-gray-800/20 dark:to-gray-700/20"></div>
                 </div>
 
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 gap-12 items-center">
                     <div className="text-center lg:text-left">
                         <div className="inline-flex items-center px-4 py-2 rounded-full bg-tosca-100 dark:bg-tosca-900 text-tosca-700 dark:text-tosca-300 text-sm font-medium mb-6">
                             <Lightbulb className="w-4 h-4 mr-2" />
@@ -125,11 +125,6 @@ export default function LandingModule() {
                                 <span>Sertifikat resmi</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="relative">
-                        <div className="absolute -top-4 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-                        <div className="absolute -bottom-8 -left-4 w-72 h-72 bg-tosca-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
                     </div>
                 </div>
             </section>
